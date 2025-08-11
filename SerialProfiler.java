@@ -3,7 +3,7 @@ import java.util.*;
 
 public class SerialProfiler {
     //store the values for testing in a list
-    static List<Integer> GRID_SIZES = Arrays.asList(100, 200, 500, 1000);
+    static List<Integer> GRID_SIZES = Arrays.asList(100, 200, 300, 500);
     static List<Double> DENSITIES  = Arrays.asList(0.05, 0.10, 0.20);
     static List<Integer> SEEDS = Arrays.asList(1, 2, 3);
 
@@ -26,14 +26,24 @@ public class SerialProfiler {
 
                     //get start op time
                     //long start = System.nanoTime(); ---> dont need -- can access public static timers from DungeonHunter.java
-                    DungeonHunter.main(new String[]{String.valueOf(size), String.valueOf(density), String.valueOf(seed)});
+                   // DungeonHunter.main(new String[]{String.valueOf(size), String.valueOf(density), String.valueOf(seed)});
 
                     //get end system time
                     //long end = System.nanoTime(); ---> dont need -- can access public static timers from DungeonHunter.java
-                    long timeTaken = DungeonHunter.endTime - DungeonHunter.startTime;
+                    //long timeTaken = DungeonHunter.endTime - DungeonHunter.startTime;
 
-                    fileWriter.write(size + ", " + density + ", " + seed + ", " + timeTaken + "\n");
-                    System.out.printf("Ran %d %.2f %d -> %d ms%n", size, density, seed, timeTaken);
+                    //add more runs rather then average -- rather than just one run
+                    int numberOfRuns = 3;
+                    int totalTime = 0;
+
+                    for(int run = 0; run < numberOfRuns; run++){
+                        DungeonHunter.main(new String[] {String.valueOf(size), String.valueOf(density), String.valueOf(seed)});
+                        totalTime += (DungeonHunter.endTime - DungeonHunter.startTime);
+                    }
+                    long averageTime = totalTime/numberOfRuns;
+
+                    fileWriter.write(size + ", " + density + ", " + seed + ", " + averageTime + "\n");
+                    System.out.printf("Ran %d %.2f %d -> %d ms%n", size, density, seed, averageTime);
                 }
             }
         }
