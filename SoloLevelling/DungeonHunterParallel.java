@@ -103,6 +103,13 @@
             if (i < remainder){
                 endIndex++;
             }
+            workers[i] = new SearchWorker(searches, startIndex, endIndex, i);
+            currentIndex = endIndex;
+        }
+        //start timing for the threads
+        tick();
+        for(SearchWorker worker : workers){
+            worker.start();
         }
 
          
@@ -110,16 +117,24 @@
          int max =Integer.MIN_VALUE;
          int localMax=Integer.MIN_VALUE;
             int finder =-1;
-         tick();  //start timer
-          for  (int i=0;i<numSearches;i++) {
-             localMax=searches[i].findManaPeak();
-             if(localMax>max) {
-                 max=localMax;
-                 finder=i; //keep track of who found it
-             }
-             if(DEBUG) System.out.println("Shadow "+searches[i].getID()+" finished at  "+localMax + " in " +searches[i].getSteps());
-         }
-            tock(); //end timer
+
+        try {
+             for (int i = 0; i < numThreads; i++) {
+                workers[i].join(); // Wait for thread to complete
+                localMax = workers[i].getLocalMax();
+                if (localMax > max) {
+                     max = localMax;
+                     finder = workers[i].getLocalFinder(); //keep track of who found it
+                }
+            }
+        }catch (InterruptedException e) {
+    		System.err.println("Thread interrupted: " + e.getMessage());
+    		System.exit(1);
+    	}
+        
+        //parallel stops
+
+        tock(); //end timer
             
          System.out.printf("\t dungeon size: %d,\n", gateSize);
          System.out.printf("\t rows: %d, columns: %d\n", dungeonRows, dungeonColumns);
@@ -137,4 +152,47 @@
          dungeon.visualisePowerMap("visualiseSearch.png", false);
          dungeon.visualisePowerMap("visualiseSearchPath.png", true);
      }
+
+     //innner class to represent a worker thread to process a subset of searches
+     static class SearchWorker extends Thread{
+        private HuntParallel[] searches;
+    	private int startIndex, endIndex;
+    	private int localMax = Integer.MIN_VALUE;
+    	private int localFinder = -1;
+    	private int threadId;
+
+        public SearchWorker(HuntParallel[] searches, int start, int end, int id) {
+    		this.searches = searches;
+    		this.startIndex = start;
+    		this.endIndex = end;
+    		this.threadId = id;
+    	}
+        public void run() {
+    		for (int i = startIndex; i < endIndex; i++) {
+    			int result = searches[i].findManaPeak();
+    			if (result > localMax) {
+    				localMax = result;
+    				localFinder = i; // Keep track of which search found the local max
+    			}
+    			if (DEBUG) {
+    				System.out.println("Thread " + threadId + ": Shadow " + 
+    								 searches[i].getID() + " finished at " + 
+    								 result + " in " + searches[i].getSteps());
+    			}
+    		}
+    	}
+
+        public int getLocalMax() {
+    		return localMax;
+    	}
+    	
+    	/**
+    	 * @return The index of the search that found the local maximum
+    	 */
+    	public int getLocalFinder() {
+    		return localFinder;
+    	}
+
+     }
+
  }

@@ -17,9 +17,6 @@
  import javax.imageio.ImageIO;
  
  import java.awt.Color;
- import java.util.concurrent.ForkJoinPool;
- import java.util.concurrent.RecursiveAction;
- import java.util.concurrent.atomic.AtomicInteger;
  import java.awt.image.BufferedImage;
  import java.io.File;
  
@@ -27,8 +24,6 @@
  
      public static final int PRECISION = 10000;
      public static final int RESOLUTION = 5;
-
-     private static int THRESHOLD = 10;
  
      private int rows, columns; //dungeonGrid size
      private double xmin, xmax, ymin, ymax; //x and y dungeon limits
@@ -93,10 +88,7 @@
           * @param x_coord The x-coordinate in the dungeon grid.
           * @param y_coord The y-coordinate in the dungeon grid.
           * @return A double value representing the mana value at (x, y).
-    */
-
-    //GET MANA STAYS THE SAME
-    
+          */
      int getManaLevel( int x, int y) {
          if (visited(x,y)) return manaMap[x][y];  //don't recalculate 
          if (manaMap[x][y]>Integer.MIN_VALUE) return manaMap[x][y];  //don't recalculate 
@@ -136,8 +128,8 @@
       * @param y_coord The y-coordinate in the dungeon grid.
       * @return the direction of highest mana.
       */
-     Hunt.Direction getNextStepDirection( int x, int y) {
-         Hunt.Direction climbDirection = Hunt.Direction.STAY;
+     HuntParallel.Direction getNextStepDirection( int x, int y) {
+         HuntParallel.Direction climbDirection = HuntParallel.Direction.STAY;
          int localMax = getManaLevel(x, y);
  
          // Define directions with (dx, dy)
@@ -152,15 +144,15 @@
              { 1,  1}  // DOWN_RIGHT
          };
  
-         Hunt.Direction[] directionEnums = {
-             Hunt.Direction.LEFT,
-             Hunt.Direction.RIGHT,
-             Hunt.Direction.UP,
-             Hunt.Direction.DOWN,
-             Hunt.Direction.UP_LEFT,
-             Hunt.Direction.UP_RIGHT,
-             Hunt.Direction.DOWN_LEFT,
-             Hunt.Direction.DOWN_RIGHT
+         HuntParallel.Direction[] directionEnums = {
+            HuntParallel.Direction.LEFT,
+            HuntParallel.Direction.RIGHT,
+            HuntParallel.Direction.UP,
+            HuntParallel.Direction.DOWN,
+            HuntParallel.Direction.UP_LEFT,
+            HuntParallel.Direction.UP_RIGHT,
+            HuntParallel.Direction.DOWN_LEFT,
+            HuntParallel.Direction.DOWN_RIGHT
          };
  
          for (int i = 0; i < directions.length; i++) {
