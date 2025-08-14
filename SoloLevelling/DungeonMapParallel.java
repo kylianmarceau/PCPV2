@@ -17,6 +17,9 @@
  import javax.imageio.ImageIO;
  
  import java.awt.Color;
+ import java.util.concurrent.ForkJoinPool;
+ import java.util.concurrent.RecursiveAction;
+ import java.util.concurrent.atomic.AtomicInteger;
  import java.awt.image.BufferedImage;
  import java.io.File;
  
@@ -24,6 +27,8 @@
  
      public static final int PRECISION = 10000;
      public static final int RESOLUTION = 5;
+
+     private static int THRESHOLD = 10;
  
      private int rows, columns; //dungeonGrid size
      private double xmin, xmax, ymin, ymax; //x and y dungeon limits
@@ -88,7 +93,10 @@
           * @param x_coord The x-coordinate in the dungeon grid.
           * @param y_coord The y-coordinate in the dungeon grid.
           * @return A double value representing the mana value at (x, y).
-          */
+    */
+
+    //GET MANA STAYS THE SAME
+    
      int getManaLevel( int x, int y) {
          if (visited(x,y)) return manaMap[x][y];  //don't recalculate 
          if (manaMap[x][y]>Integer.MIN_VALUE) return manaMap[x][y];  //don't recalculate 
