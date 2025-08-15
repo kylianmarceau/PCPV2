@@ -167,6 +167,7 @@
     		this.endIndex = end;
     		this.threadId = id;
     	}
+        
         public void run() {
     		for (int i = startIndex; i < endIndex; i++) {
     			int result = searches[i].findManaPeak();
