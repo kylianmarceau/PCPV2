@@ -1,9 +1,10 @@
 import java.io.*;
+import java.util.Arrays;
 
 public class ValidationScript {
     static int[] GRID_SIZES = {50, 100, 200};
     static double[] DENSITIES = {0.05, 0.10, 0.20 };
-    static int[] SEEDS  = {1, 2, 3, 42, 100};
+    static int[] SEEDS  = {0, 1, 2, 3, 42, 100};
 
     public static void main(String[] args) {
         validateCorrectness();
@@ -30,16 +31,17 @@ public class ValidationScript {
 
                     if (testPassed){
                         passedTests ++;
-                        System.out.println("✅");
+                        System.out.println("=======✅ TEST PASSED=======");
                     }
                     else{
-                        System.out.println("❌");
+                        System.out.println("=======❌ TEST FAILED=======");
                         System.out.printf("    Serial:   Mana=%d, X=%.1f, Y=%.1f\n", 
                                         serialResult.mana, serialResult.x, serialResult.y);
                         System.out.printf("    Parallel: Mana=%d, X=%.1f, Y=%.1f\n", 
                                         parallelResult.mana, parallelResult.x, parallelResult.y);
                     }
                     System.out.println();
+
                 }
             }
         }
@@ -53,37 +55,55 @@ public class ValidationScript {
     }
 
     private static SerialResult runSerial(int gridSize, double density, int seed){
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintStream originalOutput = System.out;
-        System.setOut(new PrintStream(baos));
 
-        // run the serial evrsion
-        DungeonHunter.main(new String[]{String.valueOf(gridSize), String.valueOf(density), String.valueOf(seed)});
+        // ADD TRY
+        try{
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            PrintStream originalOutput = System.out;
+            System.setOut(new PrintStream(baos));
+    
+            // run the serial evrsion
+            DungeonHunter.main(new String[]{String.valueOf(gridSize), String.valueOf(density), String.valueOf(seed)});
+    
+            System.setOut(originalOutput);
+            String output = baos.toString();
+    
+            return parseSerialOutput(output);
+        } catch (Exception e) {
+            System.err.println("Error running parallel version: " + e.getMessage());
+            return new SerialResult(Integer.MIN_VALUE, 0.0, 0.0);
+        }
 
-        System.setOut(originalOutput);
-        String output = baos.toString();
-
-        return parseSerialOutput(output);
+        
     }
 
     private static ParallelResult runParallel(int gridSize, double density, int seed){
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintStream originalOutput = System.out;
-        System.setOut(new PrintStream(baos));
 
-        // run the parallel evrsion
-        DungeonHunterParallel.main(new String[]{String.valueOf(gridSize), String.valueOf(density), String.valueOf(seed)});
+        // EDIT --> add try catch otherwise- constant error when running
+        try{
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            PrintStream originalOutput = System.out;
+            System.setOut(new PrintStream(baos));
 
-        System.setOut(originalOutput);
-        String output = baos.toString();
+            // run the parallel evrsion
+            DungeonHunterParallel.main(new String[]{String.valueOf(gridSize), String.valueOf(density), String.valueOf(seed)});
 
-        return parseParallelOutput(output);
+            System.setOut(originalOutput);
+            String output = baos.toString();
+
+            return parseParallelOutput(output);
+        } catch (Exception e) {
+            System.err.println("Error running parallel version: " + e.getMessage());
+            return new ParallelResult(Integer.MIN_VALUE, 0.0, 0.0);
+        }
+        
     }
 
     private static SerialResult parseSerialOutput(String output){
     // Parse the line: "Dungeon Master (mana XXXXX) found at: x=XX.X y=XX.X"
         try{
             String[] lines = output.split("\n");
+            System.out.println("SERIAL =====> "+Arrays.toString(lines));
             for (String line : lines){
                 if (line.contains("Dungeon Master") && line.contains("found at:")){
                     // GET MANA VALUE
@@ -92,7 +112,7 @@ public class ValidationScript {
                     int mana = Integer.parseInt(line.substring(manaStart, manaEnd));
 
                     // GET X COORDS
-                    int xstart = line.indexOf("x=");
+                    int xstart = line.indexOf("x=")+2;
                     int xend = line.indexOf(" ", xstart);
                     double x = Double.parseDouble(line.substring(xstart, xend));
 
@@ -114,6 +134,7 @@ public class ValidationScript {
     private static ParallelResult parseParallelOutput(String output){
         try{
             String[] lines = output.split("\n");
+            System.out.println("PARALLEL ======>"+Arrays.toString(lines));
             for (String line : lines){
                 if (line.contains("Dungeon Master") && line.contains("found at:")){
                     // GET MANA VALUE
@@ -122,7 +143,7 @@ public class ValidationScript {
                     int mana = Integer.parseInt(line.substring(manaStart, manaEnd));
 
                     // GET X COORDS
-                    int xstart = line.indexOf("x=");
+                    int xstart = line.indexOf("x=") +2;
                     int xend = line.indexOf(" ", xstart);
                     double x = Double.parseDouble(line.substring(xstart, xend));
 
