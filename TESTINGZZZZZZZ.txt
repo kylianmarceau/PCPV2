@@ -1,0 +1,201 @@
+import java.io.*;
+
+public class ValidationScript {
+    static int[] GRID_SIZES = {50, 100, 200};
+    static double[] DENSITIES = {0.05, 0.10, 0.20};
+    static int[] SEEDS = {1, 2, 3, 42, 100};
+    
+    public static void main(String[] args) throws IOException {
+        validateCorrectness();
+    }
+    
+    public static void validateCorrectness() throws IOException {
+        System.out.println("=== VALIDATION: Comparing Serial vs Parallel Results ===\n");
+        
+        int totalTests = 0;
+        int passedTests = 0;
+        
+        for (int gridSize : GRID_SIZES) {
+            for (double density : DENSITIES) {
+                for (int seed : SEEDS) {
+                    totalTests++;
+                    
+                    System.out.printf("Test %d: Grid=%d, Density=%.2f, Seed=%d\n", 
+                                    totalTests, gridSize, density, seed);
+                    
+                    // Run serial version
+                    SerialResult serialResult = runSerial(gridSize, density, seed);
+                    
+                    // Run parallel version  
+                    ParallelResult parallelResult = runParallel(gridSize, density, seed);
+                    
+                    // Compare results
+                    boolean testPassed = compareResults(serialResult, parallelResult);
+                    
+                    if (testPassed) {
+                        passedTests++;
+                        System.out.println("  ✅ PASSED");
+                    } else {
+                        System.out.println("  ❌ FAILED");
+                        System.out.printf("    Serial:   Mana=%d, X=%.1f, Y=%.1f\n", 
+                                        serialResult.mana, serialResult.x, serialResult.y);
+                        System.out.printf("    Parallel: Mana=%d, X=%.1f, Y=%.1f\n", 
+                                        parallelResult.mana, parallelResult.x, parallelResult.y);
+                    }
+                    System.out.println();
+                }
+            }
+        }
+        
+        System.out.printf("=== VALIDATION RESULTS: %d/%d tests passed ===\n", 
+                         passedTests, totalTests);
+        
+        if (passedTests == totalTests) {
+            System.out.println("🎉 ALL TESTS PASSED! Parallel implementation is correct.");
+        } else {
+            System.out.println("⚠️  SOME TESTS FAILED! Check your parallel implementation.");
+        }
+    }
+    
+    private static SerialResult runSerial(int gridSize, double density, int seed) {
+        try {
+            // Redirect output to capture results
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            PrintStream originalOut = System.out;
+            System.setOut(new PrintStream(baos));
+            
+            // Run serial version
+            DungeonHunter.main(new String[]{
+                String.valueOf(gridSize), 
+                String.valueOf(density), 
+                String.valueOf(seed)
+            });
+            
+            // Restore output
+            System.setOut(originalOut);
+            String output = baos.toString();
+            
+            // Parse results from output
+            return parseSerialOutput(output);
+            
+        } catch (Exception e) {
+            System.err.println("Error running serial version: " + e.getMessage());
+            return new SerialResult(Integer.MIN_VALUE, 0.0, 0.0);
+        }
+    }
+    
+    private static ParallelResult runParallel(int gridSize, double density, int seed) {
+        try {
+            // Redirect output to capture results
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            PrintStream originalOut = System.out;
+            System.setOut(new PrintStream(baos));
+            
+            // Run parallel version
+            DungeonHunterParallel.main(new String[]{
+                String.valueOf(gridSize), 
+                String.valueOf(density), 
+                String.valueOf(seed)
+            });
+            
+            // Restore output
+            System.setOut(originalOut);
+            String output = baos.toString();
+            
+            // Parse results from output
+            return parseParallelOutput(output);
+            
+        } catch (Exception e) {
+            System.err.println("Error running parallel version: " + e.getMessage());
+            return new ParallelResult(Integer.MIN_VALUE, 0.0, 0.0);
+        }
+    }
+    
+    private static SerialResult parseSerialOutput(String output) {
+        // Parse the line: "Dungeon Master (mana XXXXX) found at: x=XX.X y=XX.X"
+        try {
+            String[] lines = output.split("\n");
+            for (String line : lines) {
+                if (line.contains("Dungeon Master") && line.contains("found at:")) {
+                    // Extract mana value
+                    int manaStart = line.indexOf("(mana ") + 6;
+                    int manaEnd = line.indexOf(")", manaStart);
+                    int mana = Integer.parseInt(line.substring(manaStart, manaEnd));
+                    
+                    // Extract x coordinate
+                    int xStart = line.indexOf("x=") + 2;
+                    int xEnd = line.indexOf(" ", xStart);
+                    double x = Double.parseDouble(line.substring(xStart, xEnd));
+                    
+                    // Extract y coordinate
+                    int yStart = line.indexOf("y=") + 2;
+                    double y = Double.parseDouble(line.substring(yStart).trim());
+                    
+                    return new SerialResult(mana, x, y);
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error parsing serial output: " + e.getMessage());
+        }
+        return new SerialResult(Integer.MIN_VALUE, 0.0, 0.0);
+    }
+    
+    private static ParallelResult parseParallelOutput(String output) {
+        // Same parsing logic as serial
+        try {
+            String[] lines = output.split("\n");
+            for (String line : lines) {
+                if (line.contains("Dungeon Master") && line.contains("found at:")) {
+                    // Extract mana value
+                    int manaStart = line.indexOf("(mana ") + 6;
+                    int manaEnd = line.indexOf(")", manaStart);
+                    int mana = Integer.parseInt(line.substring(manaStart, manaEnd));
+                    
+                    // Extract x coordinate
+                    int xStart = line.indexOf("x=") + 2;
+                    int xEnd = line.indexOf(" ", xStart);
+                    double x = Double.parseDouble(line.substring(xStart, xEnd));
+                    
+                    // Extract y coordinate
+                    int yStart = line.indexOf("y=") + 2;
+                    double y = Double.parseDouble(line.substring(yStart).trim());
+                    
+                    return new ParallelResult(mana, x, y);
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error parsing parallel output: " + e.getMessage());
+        }
+        return new ParallelResult(Integer.MIN_VALUE, 0.0, 0.0);
+    }
+    
+    private static boolean compareResults(SerialResult serial, ParallelResult parallel) {
+        // Results must match exactly
+        return serial.mana == parallel.mana && 
+               Math.abs(serial.x - parallel.x) < 0.01 && 
+               Math.abs(serial.y - parallel.y) < 0.01;
+    }
+    
+    // Helper classes to store results
+    static class SerialResult {
+        int mana;
+        double x, y;
+        
+        SerialResult(int mana, double x, double y) {
+            this.mana = mana;
+            this.x = x;
+            this.y = y;
+        }
+    }
+    
+    static class ParallelResult {
+        int mana;
+        double x, y;
+        
+        ParallelResult(int mana, double x, double y) {
+            this.mana = mana;
+            this.x = x;
+            this.y = y;
+        }
+    }
+}
