@@ -31,10 +31,10 @@ public class ValidationScript {
 
                     if (testPassed){
                         passedTests ++;
-                        System.out.println("=======✅ TEST PASSED=======");
+                        System.out.println("=======✅✅TEST PASSED✅✅=======");
                     }
                     else{
-                        System.out.println("=======❌ TEST FAILED=======");
+                        System.out.println("=======❌❌TEST FAILED❌❌=======");
                         System.out.printf("    Serial:   Mana=%d, X=%.1f, Y=%.1f\n", 
                                         serialResult.mana, serialResult.x, serialResult.y);
                         System.out.printf("    Parallel: Mana=%d, X=%.1f, Y=%.1f\n", 
