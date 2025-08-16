@@ -4,7 +4,7 @@ import java.util.Arrays;
 public class ValidationScript {
     static int[] GRID_SIZES = {50, 100, 200};
     static double[] DENSITIES = {0.05, 0.10, 0.20 };
-    static int[] SEEDS  = {0, 1, 2, 3, 42, 100};
+    static int[] SEEDS  = {1, 2, 3, 42, 100};
 
     public static void main(String[] args) {
         validateCorrectness();

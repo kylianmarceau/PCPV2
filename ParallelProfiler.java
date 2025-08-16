@@ -10,7 +10,6 @@ public class ParallelProfiler {
     static String OUTPUT_FILE = "parallel_tests_output.txt";
     public static void main(String[] args) throws IOException {
         profile();
-
     }
 
     public static void profile()throws IOException{
@@ -37,8 +36,8 @@ public class ParallelProfiler {
                     int totalTime = 0;
 
                     for(int run = 0; run < numberOfRuns; run++){
-                        DungeonHunter.main(new String[] {String.valueOf(size), String.valueOf(density), String.valueOf(seed)});
-                        totalTime += (DungeonHunter.endTime - DungeonHunter.startTime);
+                        DungeonHunterParallel.main(new String[] {String.valueOf(size), String.valueOf(density), String.valueOf(seed)});
+                        totalTime += (DungeonHunterParallel.endTime - DungeonHunterParallel.startTime);
                     }
                     long averageTime = totalTime/numberOfRuns;
 
