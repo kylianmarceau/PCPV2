@@ -2,8 +2,8 @@ import java.io.*;
 import java.util.Arrays;
 
 public class ValidationScript {
-    static int[] GRID_SIZES = {50, 100, 200};
-    static double[] DENSITIES = {0.05, 0.10, 0.20 };
+    static int[] GRID_SIZES = {50, 100, 200, 300, 400, 500, 600, 700};
+    static double[] DENSITIES = {0.05, 0.10, 0.20};
     static int[] SEEDS  = {1, 2, 3, 42, 100};
 
     // For storing timing results
