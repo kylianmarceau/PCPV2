@@ -22,8 +22,8 @@
 
  // ADD -> MUST USE FORK?JOIN
  import java.util.concurrent.ForkJoinPool;
- import java.util.concurrent.RecursiveAction;
-
+ import java.util.concurrent.RecursiveTask;
+ 
  class DungeonHunterParallel{
      static final boolean DEBUG=false;
  
@@ -91,78 +91,100 @@
 
         //----------------------parallel implementation FORK JOIN------------------------------------
         // USE FORK JOIN replacement
-        ForkJoinPool pool = new ForkJoinPool();
-        tick(); // STRAT timer
+            ForkJoinPool pool = new ForkJoinPool();
+            tick(); // STRAT timer
 
-        SearchTask mainTask = new SearchTask
+            SearchTask mainTask = new SearchTask(searches, 0, numSearches);
+            SearchResult result = pool.invoke(mainTask);
 
-        static class SearchTask extends RecursiveTask<SearchResult> {
-            private HuntParallel[] searches;
-            private int startIndex, endIndex;
-            private static final int THRESHOLD = 10; // Minimum work unit size
-   
-            public SearchTask(HuntParallel[] searches, int start, int end) {
-                this.searches = searches;
-                this.startIndex = start;
-                this.endIndex = end;
-            }
-   
-            @Override
-            protected SearchResult compute() {
-                int workSize = endIndex - startIndex;
+            int max = result.max;
+            int finder = result.finder;
+
+            pool.shutdown();
+
+            tock();
+
+            System.out.printf("\t dungeon size: %d,\n", gateSize);
+            System.out.printf("\t rows: %d, columns: %d\n", dungeonRows, dungeonColumns);
+            System.out.printf("\t x: [%f, %f], y: [%f, %f]\n", xmin, xmax, ymin, ymax );
+            System.out.printf("\t Number searches: %d\n", numSearches );
+    
+            /*  Total computation time */
+            System.out.printf("\n\t time: %d ms\n",endTime - startTime );
+            int tmp=dungeon.getGridPointsEvaluated();
+            System.out.printf("\tnumber dungeon grid points evaluated: %d  (%2.0f%s)\n",tmp,(tmp*1.0/(dungeonRows*dungeonColumns*1.0))*100.0, "%");
+    
+            /* Results*/
+            System.out.printf("Dungeon Master (mana %d) found at:  ", max );
+            System.out.printf("x=%.1f y=%.1f\n\n",dungeon.getXcoord(searches[finder].getPosRow()), dungeon.getYcoord(searches[finder].getPosCol()) );
+            dungeon.visualisePowerMap("visualiseSearch.png", false);
+            dungeon.visualisePowerMap("visualiseSearchPath.png", true);
+    }
+
+    static class SearchTask extends RecursiveTask<SearchResult> {
+        private HuntParallel[] searches;
+        private int startIndex, endIndex;
+        private static final int THRESHOLD = 10; // Minimum work unit size
+
+        public SearchTask(HuntParallel[] searches, int start, int end) {
+            this.searches = searches;
+            this.startIndex = start;
+            this.endIndex = end;
+        }
+
+        @Override
+        protected SearchResult compute() {
+            int workSize = endIndex - startIndex;
+            
+            if (workSize <= THRESHOLD) {
+                // Base case: do the work directly
+                int localMax = Integer.MIN_VALUE;
+                int localFinder = -1;
                 
-                if (workSize <= THRESHOLD) {
-                    // Base case: do the work directly
-                    int localMax = Integer.MIN_VALUE;
-                    int localFinder = -1;
-                    
-                    for (int i = startIndex; i < endIndex; i++) {
-                        int result = searches[i].findManaPeak();
-                        if (result > localMax) {
-                            localMax = result;
-                            localFinder = i;
-                        }
-                        if (DEBUG) {
-                            System.out.println("Task: Shadow " + searches[i].getID() + 
-                                             " finished at " + result + " in " + searches[i].getSteps());
-                        }
+                for (int i = startIndex; i < endIndex; i++) {
+                    int result = searches[i].findManaPeak();
+                    if (result > localMax) {
+                        localMax = result;
+                        localFinder = i;
                     }
-                    return new SearchResult(localMax, localFinder);
+                    if (DEBUG) {
+                        System.out.println("Task: Shadow " + searches[i].getID() + 
+                                         " finished at " + result + " in " + searches[i].getSteps());
+                    }
+                }
+                return new SearchResult(localMax, localFinder);
+            } else {
+                // Recursive case: split the work
+                int mid = startIndex + workSize / 2;
+                SearchTask leftTask = new SearchTask(searches, startIndex, mid);
+                SearchTask rightTask = new SearchTask(searches, mid, endIndex);
+                
+                // Fork the left task to run in parallel
+                leftTask.fork();
+                
+                // Compute the right task in current thread
+                SearchResult rightResult = rightTask.compute();
+                
+                // Join (wait for) the left task
+                SearchResult leftResult = leftTask.join();
+                
+                // Combine results
+                if (leftResult.max > rightResult.max) {
+                    return leftResult;
                 } else {
-                    // Recursive case: split the work
-                    int mid = startIndex + workSize / 2;
-                    SearchTask leftTask = new SearchTask(searches, startIndex, mid);
-                    SearchTask rightTask = new SearchTask(searches, mid, endIndex);
-                    
-                    // Fork the left task to run in parallel
-                    leftTask.fork();
-                    
-                    // Compute the right task in current thread
-                    SearchResult rightResult = rightTask.compute();
-                    
-                    // Join (wait for) the left task
-                    SearchResult leftResult = leftTask.join();
-                    
-                    // Combine results
-                    if (leftResult.max > rightResult.max) {
-                        return leftResult;
-                    } else {
-                        return rightResult;
-                    }
+                    return rightResult;
                 }
             }
         }
+    }
 
-
-        //NEW helper to store results
-        static class SearchResult {
-            int max;
-            int finder;
-            
-            public SearchResult(int max, int finder) {
-                this.max = max;
-                this.finder = finder;
-            }
+    static class SearchResult {
+        int max;
+        int finder;
+        
+        public SearchResult(int max, int finder) {
+            this.max = max;
+            this.finder = finder;
         }
-     }
+    }
 }
