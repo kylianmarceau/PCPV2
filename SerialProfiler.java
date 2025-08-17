@@ -3,7 +3,7 @@ import java.util.*;
 
 public class SerialProfiler {
     //store the values for testing in a list
-    static List<Integer> GRID_SIZES = Arrays.asList(100, 200, 300, 500);
+    static List<Integer> GRID_SIZES = Arrays.asList(10, 25, 50, 100, 200);
     static List<Double> DENSITIES  = Arrays.asList(0.05, 0.10, 0.20);
     static List<Integer> SEEDS = Arrays.asList(1, 2, 3);
 
