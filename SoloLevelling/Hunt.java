@@ -1,4 +1,3 @@
-
 /**
  * Hunt.java
  *
@@ -8,7 +7,7 @@
  *M. Kuttel 2025
  */
 
-public class Hunt {
+ public class Hunt {
 	private int id;						//  identifier for this hunt
 	private int posRow, posCol;		// Position in the dungeonMap
 	private int steps; 				//number of steps to end of the search

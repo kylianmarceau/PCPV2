@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.Arrays;
 
 public class ValidationScript {
-    static int[] GRID_SIZES = {25, 50, 100, 200, 300, 400, 500, 600, 700, 800};
+    static int[] GRID_SIZES = {25, 50, 75, 100, 200, 250, 300, 400, 500, 600};
     static double[] DENSITIES = {0.02, 0.05, 0.10, 0.25, 0.50};
     static int[] SEEDS  = {1, 2, 3};
 
@@ -64,7 +64,7 @@ public class ValidationScript {
         else{
             System.out.println("⚠️ SOME TESTS FAILED");
         }
-        System.out.println("Timing results written to 'timing_results.txt'");
+        System.out.println("Timing results written to 'timing_results2.txt'");
     }
 
     private static void initializeTimingFile() {
