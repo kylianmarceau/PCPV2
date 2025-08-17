@@ -1,4 +1,3 @@
-
 /**
  * DungeonMap.java
  *
@@ -173,7 +172,7 @@
  
      /**
       * Generates an image from the dungeon grid.
-      * Unvisited cells are colored black, while visited cells follow a black→purple→red→white gradient.
+      * Unvisited cells are colored black, while visited cells follow a blackâ†’purpleâ†’redâ†’white gradient.
       *
       * @param filename The name of the output PNG file.
       */
@@ -207,7 +206,7 @@
                  if (path && !visited(x, y)) color = Color.BLACK; //view path only, all not visited black
                  else if (manaMap[x][y]==Integer.MIN_VALUE) color = Color.BLACK; // not evaluated black
                  else {
-                     double normalized = (manaMap[x][y] - min) / range; // 0–1
+                     double normalized = (manaMap[x][y] - min) / range; // 0â€“1
                      color = mapHeightToColor(normalized);
                  }
                  image.setRGB(x, height - 1 - y, color.getRGB());
@@ -223,7 +222,7 @@
      }
  
      /**
-      * Maps normalized height [0..1] to black → purple → red → white.
+      * Maps normalized height [0..1] to black â†’ purple â†’ red â†’ white.
       */
      private Color mapHeightToColor(double normalized) {
          normalized = Math.max(0, Math.min(1, normalized)); // clamp to [0,1]
@@ -276,4 +275,3 @@
  
  
  }
- 
