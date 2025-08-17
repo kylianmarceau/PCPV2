@@ -20,6 +20,10 @@
 
  import java.util.Random; //for the random search locations
 
+ // ADD -> MUST USE FORK?JOIN
+ import java.util.concurrent.ForkJoinPool;
+ import java.util.concurrent.RecursiveAction;
+
  class DungeonHunterParallel{
      static final boolean DEBUG=false;
  
@@ -85,114 +89,80 @@
              searches[i]=new HuntParallel(i+1, rand.nextInt(dungeonRows),
                      rand.nextInt(dungeonColumns),dungeon);
 
-        //----------------------parallel implementation------------------------------------
-        //determine number of threads
-        int numThreads = Runtime.getRuntime().availableProcessors();
+        //----------------------parallel implementation FORK JOIN------------------------------------
+        // USE FORK JOIN replacement
+        ForkJoinPool pool = new ForkJoinPool();
+        tick(); // STRAT timer
 
-        SearchWorker[] workers = new SearchWorker[numThreads];
+        SearchTask mainTask = new SearchTask
 
-        int searchesPerThread = numSearches / numThreads;
-        int remainder = numSearches % numThreads;
-
-        int currentIndex = 0;
-        for (int i = 0; i < numThreads; i++){
-            int startIndex = currentIndex;
-            int endIndex = currentIndex + searchesPerThread;
-
-            if (i < remainder){
-                endIndex++;
+        static class SearchTask extends RecursiveTask<SearchResult> {
+            private HuntParallel[] searches;
+            private int startIndex, endIndex;
+            private static final int THRESHOLD = 10; // Minimum work unit size
+   
+            public SearchTask(HuntParallel[] searches, int start, int end) {
+                this.searches = searches;
+                this.startIndex = start;
+                this.endIndex = end;
             }
-            workers[i] = new SearchWorker(searches, startIndex, endIndex, i);
-            currentIndex = endIndex;
-        }
-        //start timing for the threads
-        tick();
-        for(SearchWorker worker : workers){
-            worker.start();
-        }
-
-         
-         //do all the searches 	
-         int max =Integer.MIN_VALUE;
-         int localMax=Integer.MIN_VALUE;
-            int finder =-1;
-
-        try {
-             for (int i = 0; i < numThreads; i++) {
-                workers[i].join(); // Wait for thread to complete
-                localMax = workers[i].getLocalMax();
-                if (localMax > max) {
-                     max = localMax;
-                     finder = workers[i].getLocalFinder(); //keep track of who found it
+   
+            @Override
+            protected SearchResult compute() {
+                int workSize = endIndex - startIndex;
+                
+                if (workSize <= THRESHOLD) {
+                    // Base case: do the work directly
+                    int localMax = Integer.MIN_VALUE;
+                    int localFinder = -1;
+                    
+                    for (int i = startIndex; i < endIndex; i++) {
+                        int result = searches[i].findManaPeak();
+                        if (result > localMax) {
+                            localMax = result;
+                            localFinder = i;
+                        }
+                        if (DEBUG) {
+                            System.out.println("Task: Shadow " + searches[i].getID() + 
+                                             " finished at " + result + " in " + searches[i].getSteps());
+                        }
+                    }
+                    return new SearchResult(localMax, localFinder);
+                } else {
+                    // Recursive case: split the work
+                    int mid = startIndex + workSize / 2;
+                    SearchTask leftTask = new SearchTask(searches, startIndex, mid);
+                    SearchTask rightTask = new SearchTask(searches, mid, endIndex);
+                    
+                    // Fork the left task to run in parallel
+                    leftTask.fork();
+                    
+                    // Compute the right task in current thread
+                    SearchResult rightResult = rightTask.compute();
+                    
+                    // Join (wait for) the left task
+                    SearchResult leftResult = leftTask.join();
+                    
+                    // Combine results
+                    if (leftResult.max > rightResult.max) {
+                        return leftResult;
+                    } else {
+                        return rightResult;
+                    }
                 }
             }
-        }catch (InterruptedException e) {
-    		System.err.println("Thread interrupted: " + e.getMessage());
-    		System.exit(1);
-    	}
-        
-        //parallel stops
+        }
 
-        tock(); //end timer
+
+        //NEW helper to store results
+        static class SearchResult {
+            int max;
+            int finder;
             
-         System.out.printf("\t dungeon size: %d,\n", gateSize);
-         System.out.printf("\t rows: %d, columns: %d\n", dungeonRows, dungeonColumns);
-         System.out.printf("\t x: [%f, %f], y: [%f, %f]\n", xmin, xmax, ymin, ymax );
-         System.out.printf("\t Number searches: %d\n", numSearches );
- 
-         /*  Total computation time */
-         System.out.printf("\n\t time: %d ms\n",endTime - startTime );
-         int tmp=dungeon.getGridPointsEvaluated();
-         System.out.printf("\tnumber dungeon grid points evaluated: %d  (%2.0f%s)\n",tmp,(tmp*1.0/(dungeonRows*dungeonColumns*1.0))*100.0, "%");
- 
-         /* Results*/
-         System.out.printf("Dungeon Master (mana %d) found at:  ", max );
-         System.out.printf("x=%.1f y=%.1f\n\n",dungeon.getXcoord(searches[finder].getPosRow()), dungeon.getYcoord(searches[finder].getPosCol()) );
-         dungeon.visualisePowerMap("visualiseSearch.png", false);
-         dungeon.visualisePowerMap("visualiseSearchPath.png", true);
+            public SearchResult(int max, int finder) {
+                this.max = max;
+                this.finder = finder;
+            }
+        }
      }
-
-     //innner class to represent a worker thread to process a subset of searches
-     static class SearchWorker extends Thread{
-        private HuntParallel[] searches;
-    	private int startIndex, endIndex;
-    	private int localMax = Integer.MIN_VALUE;
-    	private int localFinder = -1;
-    	private int threadId;
-
-        public SearchWorker(HuntParallel[] searches, int start, int end, int id) {
-    		this.searches = searches;
-    		this.startIndex = start;
-    		this.endIndex = end;
-    		this.threadId = id;
-    	}
-        
-        public void run() {
-    		for (int i = startIndex; i < endIndex; i++) {
-    			int result = searches[i].findManaPeak();
-    			if (result > localMax) {
-    				localMax = result;
-    				localFinder = i; // Keep track of which search found the local max
-    			}
-    			if (DEBUG) {
-    				System.out.println("Thread " + threadId + ": Shadow " + 
-    								 searches[i].getID() + " finished at " + 
-    								 result + " in " + searches[i].getSteps());
-    			}
-    		}
-    	}
-
-        public int getLocalMax() {
-    		return localMax;
-    	}
-    	
-    	/**
-    	 * @return The index of the search that found the local maximum
-    	 */
-    	public int getLocalFinder() {
-    		return localFinder;
-    	}
-
-     }
-
- }
+}
