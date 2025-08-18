@@ -3,17 +3,25 @@ import java.util.*;
 
 public class SerialProfiler {
     //store the values for testing in a list
-    static List<Integer> GRID_SIZES = Arrays.asList(10, 25, 50, 150, 200, 250);
-    static List<Double> DENSITIES  = Arrays.asList(0.05, 0.10, 0.20, 0.30);
+    static List<Integer> GRID_SIZES = Arrays.asList(10, 20, 30, 40, 50, 60, 70, 80, 90, 100);
+    static List<Double> DENSITIES  = Arrays.asList(0.05, 0.10, 0.20, 0.30, 0.50);
     static List<Integer> SEEDS = Arrays.asList(1, 2, 3);
 
-    static String OUTPUT_FILE = "serial_tests_output.txt";
+    static String OUTPUT_FILE = "ProfileOutputs/serial_tests_output.txt";
     public static void main(String[] args) throws IOException {
         profile();
 
     }
 
     public static void profile()throws IOException{
+
+        // NEW FOLDER
+        File profileDir = new File("ProfileOutputs"); // ADD TO FOLDER 
+        if (!profileDir.exists()){
+            boolean createdFolder = profileDir.mkdirs();
+            System.out.println("Created outputs directory");
+        }
+
         FileWriter fileWriter = new FileWriter(OUTPUT_FILE);
         fileWriter.write("Grid_Size, Density, Seed, Time_ms\n");
 
