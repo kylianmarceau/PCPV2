@@ -3,9 +3,9 @@ import java.util.*;
 
 public class ParallelProfiler {
     //store the values for testing in a list
-    static List<Integer> GRID_SIZES = Arrays.asList(10, 20, 30, 40, 50, 60, 70, 80, 90, 100);
-    static List<Double> DENSITIES  = Arrays.asList(0.05, 0.10, 0.20, 0.30, 0.50);
-    static List<Integer> SEEDS = Arrays.asList(1, 2, 3);
+    static List<Integer> GRID_SIZES = Arrays.asList(20, 50, 100, 300, 500);
+    static List<Double> DENSITIES  = Arrays.asList(0.05, 0.10, 0.20, 0.30, 0.50, 0.60, 0.70, 0.80);
+    static List<Integer> SEEDS = Arrays.asList(42);
 
     static String OUTPUT_FILE = "ProfileOutputs/parallel_tests_output.txt";
     public static void main(String[] args) throws IOException {
@@ -43,8 +43,30 @@ public class ParallelProfiler {
                     int totalTime = 0;
 
                     for(int run = 0; run < numberOfRuns; run++){
+                        // Clear the static variables before each run to ensure clean state
+                        DungeonHunterParallel.startTime = 0;
+                        DungeonHunterParallel.endTime = 0;
+                        
+                        // Capture start time immediately before the call
+                        long profilerStartTime = System.currentTimeMillis();
+                        
                         DungeonHunterParallel.main(new String[] {String.valueOf(size), String.valueOf(density), String.valueOf(seed)});
-                        totalTime += (DungeonHunterParallel.endTime - DungeonHunterParallel.startTime);
+                        
+                        // Capture end time immediately after the call
+                        long profilerEndTime = System.currentTimeMillis();
+                        
+                        // Use internal timing if available and valid, otherwise fall back to profiler timing
+                        long runTime;
+                        if (DungeonHunterParallel.endTime > 0 && DungeonHunterParallel.startTime > 0 && 
+                            DungeonHunterParallel.endTime >= DungeonHunterParallel.startTime) {
+                            runTime = DungeonHunterParallel.endTime - DungeonHunterParallel.startTime;
+                        } else {
+                            runTime = profilerEndTime - profilerStartTime;
+                            System.out.println("Warning: Using fallback timing for run " + (run + 1) + 
+                                             " (Internal: " + DungeonHunterParallel.startTime + "-" + DungeonHunterParallel.endTime + ")");
+                        }
+                        
+                        totalTime += runTime;
                     }
                     long averageTime = totalTime/numberOfRuns;
 
