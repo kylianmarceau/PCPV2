@@ -142,6 +142,10 @@
 
         //----------------------parallel implementation FORK JOIN------------------------------------
         // USE FORK JOIN replacement
+        //move for better timing
+
+        tick(); // START timer - moved to just before parallel execution
+         
             ForkJoinPool pool = new ForkJoinPool();
             int adaptiveThreshold = computeOptimalThreshold(numSearches, pool);
             if (DEBUG) {
@@ -150,7 +154,7 @@
                                    " (parallelism " + pool.getParallelism() +
                                    ", leaf tasks " + leafTasks + ")");
             }
-            tick(); // STRAT timer
+            
 
             SearchTask mainTask = new SearchTask(searches, 0, numSearches, adaptiveThreshold);
             SearchResult result = pool.invoke(mainTask);
