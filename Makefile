@@ -1,6 +1,7 @@
 JAVAC=javac
 JAVA=java
 SRC=SoloLevelling
+PROFILE_DIR=ProfileOutputs
 
 # Serial version classes (in SoloLevelling directory)
 SERIAL_CLASSES = $(SRC)/DungeonMap.java $(SRC)/Hunt.java $(SRC)/DungeonHunter.java
@@ -36,13 +37,13 @@ run-parallel:
 	$(JAVA) -cp $(SRC) DungeonHunterParallel $(ARGS)
 
 # Run serial profiler
-profile-serial:
+profile-serial: | $(PROFILE_DIR)
 	$(JAVAC) $(SERIAL_CLASSES)
 	$(JAVAC) -cp $(SRC) SerialProfiler.java
 	$(JAVA) -cp .:$(SRC) SerialProfiler
 
 # Run parallel profiler
-profile-parallel:
+profile-parallel: | $(PROFILE_DIR)
 	$(JAVAC) $(PARALLEL_CLASSES)
 	$(JAVAC) -cp $(SRC) ParallelProfiler.java
 	$(JAVA) -cp .:$(SRC) ParallelProfiler
@@ -52,7 +53,11 @@ profile-both: profile-serial profile-parallel
 
 clean:
 	rm -f $(SRC)/*.class *.class
-	rm -rf ProfileOutputs
+	rm -rf $(PROFILE_DIR)
+
+# Ensure output directory exists for profilers
+$(PROFILE_DIR):
+	@mkdir -p $(PROFILE_DIR)
 
 # Test both versions
 test-both:
