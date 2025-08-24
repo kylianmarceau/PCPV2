@@ -12,6 +12,7 @@
  */
 
  import java.util.Random;
+ import java.util.concurrent.atomic.AtomicInteger;
 
  import javax.imageio.ImageIO;
  
@@ -28,7 +29,8 @@
      private double xmin, xmax, ymin, ymax; //x and y dungeon limits
      private int [][] manaMap;
      private int [][] visit;
-     private int dungeonGridPointsEvaluated;
+     private AtomicInteger dungeonGridPointsEvaluated;
+    // fixed----use atomic integer
      private double bossX;
      private double bossY;
      private double decayFactor;  
@@ -58,7 +60,8 @@
  
          manaMap = new int[rows][columns];
          visit = new int[rows][columns];
-         dungeonGridPointsEvaluated=0;
+         dungeonGridPointsEvaluated = new AtomicInteger(0);
+
  
          /* Terrain initialization */
          for(int i=0; i<rows; i++ ) {
@@ -116,7 +119,8 @@
          /* Transform to fixed point precision */
          int fixedPoint = (int)( PRECISION * mana );
          manaMap[x][y]=fixedPoint;
-         dungeonGridPointsEvaluated++;//keep count
+         dungeonGridPointsEvaluated.incrementAndGet();//keep count
+
          return fixedPoint;
      }
  
@@ -255,8 +259,8 @@
      }
  
      public int getGridPointsEvaluated() {
-         return dungeonGridPointsEvaluated;
-     }
+        return dungeonGridPointsEvaluated.get();
+    }
  
      public double getXcoord(int x) {
          return xmin + ( (xmax - xmin) / rows ) * x;
