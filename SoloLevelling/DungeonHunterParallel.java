@@ -32,6 +32,57 @@
      static long endTime = 0;
      private static void tick() {startTime = System.currentTimeMillis(); }
      private static void tock(){endTime=System.currentTimeMillis(); }
+
+     // Compute an adaptive threshold so that the fork/join splits create roughly
+     // (parallelism * tasksPerWorker) leaf tasks. Overrides:
+     //   -Ddh.threshold=<int> (forces threshold)
+     //   -Ddh.tasksPerWorker=<int> (default 8, clamped [4,16])
+     //   -Ddh.smallWorkFactor=<int> (default 2, clamped [1,4]); if
+     //        numSearches <= parallelism * smallWorkFactor then avoid splitting
+     private static int computeOptimalThreshold(int numSearches, ForkJoinPool pool) {
+         String override = System.getProperty("dh.threshold");
+         if (override != null) {
+             try {
+                 int value = Integer.parseInt(override.trim());
+                 if (value > 0) return Math.min(numSearches, value);
+             } catch (NumberFormatException ignored) { }
+         }
+
+         int parallelism = Math.max(1, pool.getParallelism());
+
+         int tasksPerWorker = 8;
+         String tpw = System.getProperty("dh.tasksPerWorker");
+         if (tpw != null) {
+             try {
+                 tasksPerWorker = Integer.parseInt(tpw.trim());
+             } catch (NumberFormatException ignored) { }
+         }
+         // clamp to a sensible range
+         if (tasksPerWorker < 4) tasksPerWorker = 4;
+         if (tasksPerWorker > 16) tasksPerWorker = 16;
+
+         int smallWorkFactor = 2;
+         String swf = System.getProperty("dh.smallWorkFactor");
+         if (swf != null) {
+             try {
+                 smallWorkFactor = Integer.parseInt(swf.trim());
+             } catch (NumberFormatException ignored) { }
+         }
+         if (smallWorkFactor < 1) smallWorkFactor = 1;
+         if (smallWorkFactor > 4) smallWorkFactor = 4;
+
+         // For tiny workloads, do not create many tasks; execute directly
+         if (numSearches <= parallelism * smallWorkFactor) {
+             return Math.max(1, numSearches);
+         }
+
+         int targetTaskCount = Math.max(1, parallelism * tasksPerWorker);
+         int threshold = (int) Math.ceil((double) numSearches / targetTaskCount);
+         // Clamp threshold into [1, numSearches]
+         if (threshold < 1) threshold = 1;
+         if (threshold > numSearches) threshold = numSearches;
+         return threshold;
+     }
  
      public static void main(String[] args)  {
          
@@ -92,9 +143,16 @@
         //----------------------parallel implementation FORK JOIN------------------------------------
         // USE FORK JOIN replacement
             ForkJoinPool pool = new ForkJoinPool();
+            int adaptiveThreshold = computeOptimalThreshold(numSearches, pool);
+            if (DEBUG) {
+                int leafTasks = (int) Math.ceil(numSearches * 1.0 / Math.max(1, adaptiveThreshold));
+                System.out.println("Adaptive threshold: " + adaptiveThreshold +
+                                   " (parallelism " + pool.getParallelism() +
+                                   ", leaf tasks " + leafTasks + ")");
+            }
             tick(); // STRAT timer
 
-            SearchTask mainTask = new SearchTask(searches, 0, numSearches);
+            SearchTask mainTask = new SearchTask(searches, 0, numSearches, adaptiveThreshold);
             SearchResult result = pool.invoke(mainTask);
 
             int max = result.max;
@@ -124,19 +182,20 @@
     static class SearchTask extends RecursiveTask<SearchResult> {
         private HuntParallel[] searches;
         private int startIndex, endIndex;
-        private static final int THRESHOLD = 10; // Minimum work unit size
+        private int threshold; // Minimum work unit size for base case
 
-        public SearchTask(HuntParallel[] searches, int start, int end) {
+        public SearchTask(HuntParallel[] searches, int start, int end, int threshold) {
             this.searches = searches;
             this.startIndex = start;
             this.endIndex = end;
+            this.threshold = Math.max(1, threshold);
         }
 
         @Override
         protected SearchResult compute() {
             int workSize = endIndex - startIndex;
             
-            if (workSize <= THRESHOLD) {
+            if (workSize <= threshold) {
                 // Base case: do the work directly
                 int localMax = Integer.MIN_VALUE;
                 int localFinder = -1;
@@ -156,8 +215,8 @@
             } else {
                 // Recursive case: split the work
                 int mid = startIndex + workSize / 2;
-                SearchTask leftTask = new SearchTask(searches, startIndex, mid);
-                SearchTask rightTask = new SearchTask(searches, mid, endIndex);
+                SearchTask leftTask = new SearchTask(searches, startIndex, mid, threshold);
+                SearchTask rightTask = new SearchTask(searches, mid, endIndex, threshold);
                 
                 // Fork the left task to run in parallel
                 leftTask.fork();
