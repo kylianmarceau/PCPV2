@@ -78,9 +78,10 @@
 
          int targetTaskCount = Math.max(1, parallelism * tasksPerWorker);
          int threshold = (int) Math.ceil((double) numSearches / targetTaskCount);
-         // Clamp threshold into [1, numSearches]
+         // Clamp threshold into [1, min(numSearches, 2056)]
          if (threshold < 1) threshold = 1;
          if (threshold > numSearches) threshold = numSearches;
+         if (threshold > 2056) threshold = 2056;
          return threshold;
      }
  
@@ -148,12 +149,19 @@
          
             ForkJoinPool pool = new ForkJoinPool();
             int adaptiveThreshold = computeOptimalThreshold(numSearches, pool);
-            if (DEBUG) {
-                int leafTasks = (int) Math.ceil(numSearches * 1.0 / Math.max(1, adaptiveThreshold));
-                System.out.println("Adaptive threshold: " + adaptiveThreshold +
-                                   " (parallelism " + pool.getParallelism() +
-                                   ", leaf tasks " + leafTasks + ")");
-            }
+            
+            // Always print threshold information for profiling
+            //int leafTasks = (int) Math.ceil(numSearches * 1.0 / Math.max(1, adaptiveThreshold));
+            //System.out.println("Threshold: " + adaptiveThreshold + 
+              //                 " (parallelism: " + pool.getParallelism() + 
+                //               ", leaf tasks: " + leafTasks + 
+                  //             ", searches: " + numSearches + ")");
+            
+            //if (DEBUG) {
+              //  System.out.println("Adaptive threshold: " + adaptiveThreshold +
+                  //                 " (parallelism " + pool.getParallelism() +
+                //                   ", leaf tasks " + leafTasks + ")");
+            //}
             
 
             SearchTask mainTask = new SearchTask(searches, 0, numSearches, adaptiveThreshold);
