@@ -34,11 +34,7 @@
      private static void tock(){endTime=System.currentTimeMillis(); }
 
      // Compute an adaptive threshold so that the fork/join splits create roughly
-     // (parallelism * tasksPerWorker) leaf tasks. Overrides:
-     //   -Ddh.threshold=<int> (forces threshold)
-     //   -Ddh.tasksPerWorker=<int> (default 8, clamped [4,16])
-     //   -Ddh.smallWorkFactor=<int> (default 2, clamped [1,4]); if
-     //        numSearches <= parallelism * smallWorkFactor then avoid splitting
+     
      private static int computeOptimalThreshold(int numSearches, ForkJoinPool pool) {
          String override = System.getProperty("dh.threshold");
          if (override != null) {
@@ -50,40 +46,81 @@
 
          int parallelism = Math.max(1, pool.getParallelism());
 
-         int tasksPerWorker = 8;
-         String tpw = System.getProperty("dh.tasksPerWorker");
-         if (tpw != null) {
-             try {
-                 tasksPerWorker = Integer.parseInt(tpw.trim());
-             } catch (NumberFormatException ignored) { }
-         }
-         // clamp to a sensible range
-         if (tasksPerWorker < 4) tasksPerWorker = 4;
-         if (tasksPerWorker > 16) tasksPerWorker = 16;
+         int tasksPerWorker = getAdaptiveTasksPerWorker(numSearches, parallelism);
+         
+         int smallWorkFactor = getAdaptiveSmallWorkFactor(parallelism);
 
-         int smallWorkFactor = 2;
-         String swf = System.getProperty("dh.smallWorkFactor");
-         if (swf != null) {
-             try {
-                 smallWorkFactor = Integer.parseInt(swf.trim());
-             } catch (NumberFormatException ignored) { }
-         }
-         if (smallWorkFactor < 1) smallWorkFactor = 1;
-         if (smallWorkFactor > 4) smallWorkFactor = 4;
-
-         // For tiny workloads, do not create many tasks; execute directly
          if (numSearches <= parallelism * smallWorkFactor) {
+             // For very small workloads, execute directly without splitting
              return Math.max(1, numSearches);
          }
 
          int targetTaskCount = Math.max(1, parallelism * tasksPerWorker);
-         int threshold = (int) Math.ceil((double) numSearches / targetTaskCount);
-         // Clamp threshold into [1, min(numSearches, 2056)]
-         if (threshold < 1) threshold = 1;
-         if (threshold > numSearches) threshold = numSearches;
-         if (threshold > 2056) threshold = 2056;
+         
+         int threshold = calculateWorkloadAwareThreshold(numSearches, targetTaskCount, parallelism);
+         
+         threshold = clampThreshold(threshold, numSearches, parallelism);
+         
          return threshold;
      }
+     
+     // IMPROVEMENT 1: Adaptive tasks per worker
+     private static int getAdaptiveTasksPerWorker(int numSearches, int parallelism) {
+         int baseTasksPerWorker = 8;
+         String tpw = System.getProperty("dh.tasksPerWorker");
+         if (tpw != null) {
+             try {
+                 baseTasksPerWorker = Integer.parseInt(tpw.trim());
+             } catch (NumberFormatException ignored) { }
+         }
+         
+         // Scale based on workload size
+         if (numSearches < 1000) {
+             // Small workloads: fewer tasks to reduce overhead
+             return Math.max(4, Math.min(6, baseTasksPerWorker));
+         } else if (numSearches > 100000) {
+             // Large workloads: more tasks for better load balancing
+             return Math.min(12, Math.max(8, baseTasksPerWorker));
+         } else {
+             // Medium workloads: use base value
+             return Math.max(4, Math.min(16, baseTasksPerWorker));
+         }
+     }
+     
+     // IMPROVEMENT 2: Adaptive small work factor
+     private static int getAdaptiveSmallWorkFactor(int parallelism) {
+         int baseSmallWorkFactor = 2;
+         String swf = System.getProperty("dh.smallWorkFactor");
+         if (swf != null) {
+             try {
+                 baseSmallWorkFactor = Integer.parseInt(swf.trim());
+             } catch (NumberFormatException ignored) { }
+         }
+         
+         // Scale with parallelism - higher parallelism can handle more small tasks
+         int adaptiveFactor = Math.max(1, Math.min(4, baseSmallWorkFactor + (parallelism / 4)));
+         return adaptiveFactor;
+     }
+     
+     // IMPROVEMENT 5: Workload-aware threshold calculation
+     private static int calculateWorkloadAwareThreshold(int numSearches, int targetTaskCount, int parallelism) {
+         // Simple base calculation - let bounds checking handle the rest
+         return (int) Math.ceil((double) numSearches / targetTaskCount);
+     }
+     
+              // IMPROVEMENT 6: Better bounds checking
+         private static int clampThreshold(int threshold, int numSearches, int parallelism) {
+                      // Cap threshold at 2056 to prevent excessive task overhead
+         threshold = Math.min(threshold, 2056);
+             
+             // Ensure minimum threshold of 1
+             threshold = Math.max(threshold, 1);
+             
+             // Ensure we don't exceed the number of searches
+             threshold = Math.min(threshold, numSearches);
+             
+             return threshold;
+         }
  
      public static void main(String[] args)  {
          
@@ -150,18 +187,18 @@
             ForkJoinPool pool = new ForkJoinPool();
             int adaptiveThreshold = computeOptimalThreshold(numSearches, pool);
             
-            // Always print threshold information for profiling
-            //int leafTasks = (int) Math.ceil(numSearches * 1.0 / Math.max(1, adaptiveThreshold));
-            //System.out.println("Threshold: " + adaptiveThreshold + 
-              //                 " (parallelism: " + pool.getParallelism() + 
-                //               ", leaf tasks: " + leafTasks + 
-                  //             ", searches: " + numSearches + ")");
+            // Print threshold information for monitoring improvements
+            int leafTasks = (int) Math.ceil(numSearches * 1.0 / Math.max(1, adaptiveThreshold));
+            int targetTasks = pool.getParallelism() * getAdaptiveTasksPerWorker(numSearches, pool.getParallelism());
             
-            //if (DEBUG) {
-              //  System.out.println("Adaptive threshold: " + adaptiveThreshold +
-                  //                 " (parallelism " + pool.getParallelism() +
-                //                   ", leaf tasks " + leafTasks + ")");
-            //}
+            System.out.println("=== THRESHOLD ANALYSIS ===");
+            System.out.println("Searches: " + numSearches);
+            System.out.println("Parallelism: " + pool.getParallelism());
+            System.out.println("Threshold: " + adaptiveThreshold);
+            System.out.println("Leaf tasks: " + leafTasks);
+            System.out.println("Target tasks: " + targetTasks);
+            System.out.println("Task efficiency: " + String.format("%.1f", (double)targetTasks / leafTasks * 100) + "%");
+            System.out.println("==========================");
             
 
             SearchTask mainTask = new SearchTask(searches, 0, numSearches, adaptiveThreshold);
