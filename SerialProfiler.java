@@ -18,7 +18,7 @@ public class SerialProfiler {
         // NEW FOLDER
         File profileDir = new File("ProfileOutputs"); // ADD TO FOLDER 
         if (!profileDir.exists()){
-            boolean createdFolder = profileDir.mkdirs();
+            //boolean createdFolder = profileDir.mkdirs();
             System.out.println("Created outputs directory");
         }
 
