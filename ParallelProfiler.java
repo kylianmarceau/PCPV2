@@ -4,7 +4,7 @@ import java.util.*;
 public class ParallelProfiler {
     //store the values for testing in a list
     static List<Integer> GRID_SIZES = Arrays.asList(20, 50, 100, 300, 500);
-    static List<Double> DENSITIES  = Arrays.asList(0.05, 0.10, 0.20, 0.30, 0.50, 0.60, 0.70, 0.80);
+    static List<Double> DENSITIES  = Arrays.asList(0.05, 0.10, 0.20, 0.30, 0.50, 0.60, 0.70, 0.80, 0.90);
     static List<Integer> SEEDS = Arrays.asList(42);
 
     static String OUTPUT_FILE = "ProfileOutputs/parallel_tests_output.txt";
