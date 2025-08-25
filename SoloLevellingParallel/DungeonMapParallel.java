@@ -1,3 +1,4 @@
+
 /**
  * DungeonMap.java
  *
@@ -12,7 +13,6 @@
  */
 
  import java.util.Random;
- import java.util.concurrent.atomic.AtomicInteger;
 
  import javax.imageio.ImageIO;
  
@@ -29,8 +29,7 @@
      private double xmin, xmax, ymin, ymax; //x and y dungeon limits
      private int [][] manaMap;
      private int [][] visit;
-     private AtomicInteger dungeonGridPointsEvaluated;
-    // fixed----use atomic integer
+     private int dungeonGridPointsEvaluated; // Changed back to regular int
      private double bossX;
      private double bossY;
      private double decayFactor;  
@@ -60,8 +59,7 @@
  
          manaMap = new int[rows][columns];
          visit = new int[rows][columns];
-         dungeonGridPointsEvaluated = new AtomicInteger(0);
-
+         dungeonGridPointsEvaluated = 0; // Changed back to regular int initialization
  
          /* Terrain initialization */
          for(int i=0; i<rows; i++ ) {
@@ -119,8 +117,8 @@
          /* Transform to fixed point precision */
          int fixedPoint = (int)( PRECISION * mana );
          manaMap[x][y]=fixedPoint;
-         dungeonGridPointsEvaluated.incrementAndGet();//keep count
-
+         dungeonGridPointsEvaluated++; // Changed back to regular increment - this creates the race condition mentioned in the assignment
+ 
          return fixedPoint;
      }
  
@@ -176,7 +174,7 @@
  
      /**
       * Generates an image from the dungeon grid.
-      * Unvisited cells are colored black, while visited cells follow a blackâ†’purpleâ†’redâ†’white gradient.
+      * Unvisited cells are colored black, while visited cells follow a blackÃ¢â€ â€™purpleÃ¢â€ â€™redÃ¢â€ â€™white gradient.
       *
       * @param filename The name of the output PNG file.
       */
@@ -210,7 +208,7 @@
                  if (path && !visited(x, y)) color = Color.BLACK; //view path only, all not visited black
                  else if (manaMap[x][y]==Integer.MIN_VALUE) color = Color.BLACK; // not evaluated black
                  else {
-                     double normalized = (manaMap[x][y] - min) / range; // 0â€“1
+                     double normalized = (manaMap[x][y] - min) / range; // 0Ã¢â‚¬â€œ1
                      color = mapHeightToColor(normalized);
                  }
                  image.setRGB(x, height - 1 - y, color.getRGB());
@@ -226,7 +224,7 @@
      }
  
      /**
-      * Maps normalized height [0..1] to black â†’ purple â†’ red â†’ white.
+      * Maps normalized height [0..1] to black Ã¢â€ â€™ purple Ã¢â€ â€™ red Ã¢â€ â€™ white.
       */
      private Color mapHeightToColor(double normalized) {
          normalized = Math.max(0, Math.min(1, normalized)); // clamp to [0,1]
@@ -259,7 +257,7 @@
      }
  
      public int getGridPointsEvaluated() {
-        return dungeonGridPointsEvaluated.get();
+        return dungeonGridPointsEvaluated; // Changed back to regular return
     }
  
      public double getXcoord(int x) {

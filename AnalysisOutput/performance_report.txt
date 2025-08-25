@@ -1,0 +1,27 @@
+=== PERFORMANCE ANALYSIS REPORT ===
+
+1. MAXIMUM SPEEDUP ACHIEVED:
+   Maximum speedup: 4.85x
+   At grid size: 500.0
+   At density: 0.1
+
+2. SPEEDUP BY GRID SIZE:
+   Grid 20: 2.32x average speedup
+   Grid 50: 4.15x average speedup
+   Grid 100: 4.39x average speedup
+   Grid 300: 4.37x average speedup
+   Grid 500: 4.71x average speedup
+
+3. SPEEDUP BY DENSITY:
+   Density 0.05: 3.28x average speedup
+   Density 0.1: 3.85x average speedup
+   Density 0.2: 3.88x average speedup
+   Density 0.3: 3.93x average speedup
+   Density 0.5: 4.11x average speedup
+   Density 0.6: 4.32x average speedup
+   Density 0.7: 4.23x average speedup
+   Density 0.8: 4.15x average speedup
+   Density 0.9: 4.11x average speedup
+
+4. CASES WHERE PARALLEL IS SLOWER (speedup < 1.0):
+   Grid 20.0, Density 0.05: 0.18x
