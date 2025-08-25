@@ -83,16 +83,23 @@ def create_speedup_graphs(speedup_df):
     ax1.legend()
     ax1.grid(True, alpha=0.3)
     
-    # Graph 2: Maximum Speedup vs Grid Size
+    # Graph 2: Parallel vs Serial Execution Time for each density
     ax2 = axes[0, 1]
-    max_speedup_by_grid = speedup_df.groupby('grid_size')['speedup'].max().reset_index()
-    ax2.plot(max_speedup_by_grid['grid_size'], max_speedup_by_grid['speedup'],
-            marker='o', label='Max Speedup', linewidth=2)
-    ax2.axhline(y=1.0, color='red', linestyle='--', alpha=0.7, label='No Speedup')
+    densities = speedup_df['density'].unique()
+    
+    for density in densities:
+        data = speedup_df[speedup_df['density'] == density]
+        # Plot serial times
+        ax2.plot(data['grid_size'], data['serial'], 
+                marker='s', label=f'Serial (Density {density})', linewidth=2, alpha=0.7)
+        # Plot parallel times
+        ax2.plot(data['grid_size'], data['parallel'], 
+                marker='o', label=f'Parallel (Density {density})', linewidth=2, alpha=0.7)
+    
     ax2.set_xlabel('Grid Size (n)')
-    ax2.set_ylabel('Speedup')
-    ax2.set_title('Maximum Speedup vs Grid Size')
-    ax2.legend()
+    ax2.set_ylabel('Execution Time (ms)')
+    ax2.set_title('Execution Time: Serial vs Parallel by Density')
+    ax2.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
     ax2.grid(True, alpha=0.3)
     
     # Graph 3: Speedup vs Density for different grid sizes
@@ -110,21 +117,8 @@ def create_speedup_graphs(speedup_df):
     ax3.legend()
     ax3.grid(True, alpha=0.3)
     
-    # Graph 4: Speedup vs Grid Size (Log Scale)
-    ax4 = axes[1, 1]
-    for density in densities:
-        data = speedup_df[speedup_df['density'] == density]
-        ax4.plot(data['grid_size'], data['speedup'],
-                marker='o', label=f'Density {density}', linewidth=2)
-
-    ax4.axhline(y=1.0, color='red', linestyle='--', alpha=0.7, label='No Speedup')
-    ax4.set_xlabel('Grid Size (log scale)')
-    ax4.set_ylabel('Speedup (log scale)')
-    ax4.set_title('Speedup vs Grid Size (Log-Log Scale)')
-    ax4.set_xscale('log')
-    ax4.set_yscale('log')
-    ax4.legend()
-    ax4.grid(True, which='both', alpha=0.3)
+    # Hide the bottom right subplot (Graph 4)
+    axes[1, 1].set_visible(False)
     
     plt.tight_layout()
     
@@ -161,10 +155,7 @@ def generate_report_data(speedup_df):
     else:
         report_content.append("   None - parallel version always faster!")
     
-    report_content.append("\n5. THRESHOLD ANALYSIS:")
-    report_content.append("   Consider testing different THRESHOLD values in your SearchTask:")
-    report_content.append("   Current threshold appears to be 10 based on your code")
-    report_content.append("   You may want to test values like 1, 5, 25, 50 for optimization")
+
     
     # Print to console
     for line in report_content:
