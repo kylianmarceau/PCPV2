@@ -1,13 +1,14 @@
 JAVAC=javac
 JAVA=java
 SRC=SoloLevelling
+SRC_PARALLEL=SoloLevellingParallel
 PROFILE_DIR=ProfileOutputs
 
 # Serial version classes (in SoloLevelling directory)
 SERIAL_CLASSES = $(SRC)/DungeonMap.java $(SRC)/Hunt.java $(SRC)/DungeonHunter.java
 
-# Parallel version classes (in SoloLevelling directory)
-PARALLEL_CLASSES = $(SRC)/DungeonMapParallel.java $(SRC)/HuntParallel.java $(SRC)/DungeonHunterParallel.java
+# Parallel version classes (in SoloLevellingParallel directory)
+PARALLEL_CLASSES = $(SRC_PARALLEL)/DungeonMapParallel.java $(SRC_PARALLEL)/HuntParallel.java $(SRC_PARALLEL)/DungeonHunterParallel.java
 
 # Profiler classes
 PROFILER_CLASSES = SerialProfiler.java ParallelProfiler.java
@@ -34,7 +35,7 @@ run:
 # Run parallel version
 run-parallel:
 	$(JAVAC) $(PARALLEL_CLASSES)
-	$(JAVA) -cp $(SRC) DungeonHunterParallel $(ARGS)
+	$(JAVA) -cp $(SRC_PARALLEL) DungeonHunterParallel $(ARGS)
 
 # Run serial profiler
 profile-serial: | $(PROFILE_DIR)
@@ -45,14 +46,24 @@ profile-serial: | $(PROFILE_DIR)
 # Run parallel profiler
 profile-parallel: | $(PROFILE_DIR)
 	$(JAVAC) $(PARALLEL_CLASSES)
-	$(JAVAC) -cp $(SRC) ParallelProfiler.java
-	$(JAVA) -cp .:$(SRC) ParallelProfiler
+	$(JAVAC) -cp $(SRC_PARALLEL) ParallelProfiler.java
+	$(JAVA) -cp .:$(SRC_PARALLEL) ParallelProfiler
 
 # Run both profilers
 profile-both: profile-serial profile-parallel
 
+# Validation script
+ValidationScript.class: ValidationScript.java
+	$(JAVAC) -cp .:$(SRC):$(SRC_PARALLEL) ValidationScript.java
+
+validation: serial parallel ValidationScript.class
+	$(JAVA) -cp .:$(SRC):$(SRC_PARALLEL) ValidationScript
+
+# Alias
+validate: validation
+
 clean:
-	rm -f $(SRC)/*.class *.class
+	rm -f $(SRC)/*.class $(SRC_PARALLEL)/*.class *.class
 	rm -rf $(PROFILE_DIR)
 
 # Ensure output directory exists for profilers
@@ -67,6 +78,6 @@ test-both:
 	@echo ""
 	@echo "=== Parallel Version ==="
 	$(JAVAC) $(PARALLEL_CLASSES)
-	$(JAVA) -cp $(SRC) DungeonHunterParallel $(ARGS)
+	$(JAVA) -cp $(SRC_PARALLEL) DungeonHunterParallel $(ARGS)
 
-.PHONY: all serial parallel profilers run run-parallel profile-serial profile-parallel profile-both clean test-both
+.PHONY: all serial parallel profilers run run-parallel profile-serial profile-parallel profile-both clean test-both validation
