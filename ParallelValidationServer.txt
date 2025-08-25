@@ -1,0 +1,182 @@
+Test 1: Grid=100, Density=0.05, Seed=1
+SERIAL =====> [	 dungeon size: 100,, 	 rows: 1000, columns: 1000, 	 x: [-100.000000, 100.000000], y: [-100.000000, 100.000000], 	 Number searches: 10000, , 	 time: 714 ms, 	number dungeon grid points evaluated: 245793  (25%), Dungeon Master (mana 121767) found at:  x=47.6 y=-19.4, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 10000, Parallelism: 8, Threshold: 157, Leaf tasks: 64, Target tasks: 64, Task efficiency: 100.0%, ==========================, 	 dungeon size: 100,, 	 rows: 1000, columns: 1000, 	 x: [-100.000000, 100.000000], y: [-100.000000, 100.000000], 	 Number searches: 10000, , 	 time: 819 ms, 	number dungeon grid points evaluated: 245794  (25%), Dungeon Master (mana 121767) found at:  x=47.6 y=-19.4, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 2: Grid=100, Density=0.05, Seed=2
+SERIAL =====> [	 dungeon size: 100,, 	 rows: 1000, columns: 1000, 	 x: [-100.000000, 100.000000], y: [-100.000000, 100.000000], 	 Number searches: 10000, , 	 time: 1365 ms, 	number dungeon grid points evaluated: 245014  (25%), Dungeon Master (mana 125325) found at:  x=47.2 y=80.0, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 10000, Parallelism: 8, Threshold: 157, Leaf tasks: 64, Target tasks: 64, Task efficiency: 100.0%, ==========================, 	 dungeon size: 100,, 	 rows: 1000, columns: 1000, 	 x: [-100.000000, 100.000000], y: [-100.000000, 100.000000], 	 Number searches: 10000, , 	 time: 326 ms, 	number dungeon grid points evaluated: 245014  (25%), Dungeon Master (mana 125325) found at:  x=47.2 y=80.0, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 3: Grid=100, Density=0.05, Seed=3
+SERIAL =====> [	 dungeon size: 100,, 	 rows: 1000, columns: 1000, 	 x: [-100.000000, 100.000000], y: [-100.000000, 100.000000], 	 Number searches: 10000, , 	 time: 1432 ms, 	number dungeon grid points evaluated: 245688  (25%), Dungeon Master (mana 113668) found at:  x=47.4 y=-84.2, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 10000, Parallelism: 8, Threshold: 157, Leaf tasks: 64, Target tasks: 64, Task efficiency: 100.0%, ==========================, 	 dungeon size: 100,, 	 rows: 1000, columns: 1000, 	 x: [-100.000000, 100.000000], y: [-100.000000, 100.000000], 	 Number searches: 10000, , 	 time: 283 ms, 	number dungeon grid points evaluated: 245688  (25%), Dungeon Master (mana 113668) found at:  x=47.4 y=-84.2, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 4: Grid=100, Density=0.10, Seed=1
+SERIAL =====> [	 dungeon size: 100,, 	 rows: 1000, columns: 1000, 	 x: [-100.000000, 100.000000], y: [-100.000000, 100.000000], 	 Number searches: 20000, , 	 time: 1761 ms, 	number dungeon grid points evaluated: 407507  (41%), Dungeon Master (mana 125672) found at:  x=46.6 y=-18.2, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 20000, Parallelism: 8, Threshold: 313, Leaf tasks: 64, Target tasks: 64, Task efficiency: 100.0%, ==========================, 	 dungeon size: 100,, 	 rows: 1000, columns: 1000, 	 x: [-100.000000, 100.000000], y: [-100.000000, 100.000000], 	 Number searches: 20000, , 	 time: 593 ms, 	number dungeon grid points evaluated: 407507  (41%), Dungeon Master (mana 125672) found at:  x=46.6 y=-18.2, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 5: Grid=100, Density=0.10, Seed=2
+SERIAL =====> [	 dungeon size: 100,, 	 rows: 1000, columns: 1000, 	 x: [-100.000000, 100.000000], y: [-100.000000, 100.000000], 	 Number searches: 20000, , 	 time: 2211 ms, 	number dungeon grid points evaluated: 404487  (40%), Dungeon Master (mana 125325) found at:  x=47.2 y=80.0, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 20000, Parallelism: 8, Threshold: 313, Leaf tasks: 64, Target tasks: 64, Task efficiency: 100.0%, ==========================, 	 dungeon size: 100,, 	 rows: 1000, columns: 1000, 	 x: [-100.000000, 100.000000], y: [-100.000000, 100.000000], 	 Number searches: 20000, , 	 time: 427 ms, 	number dungeon grid points evaluated: 404498  (40%), Dungeon Master (mana 125325) found at:  x=47.2 y=80.0, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 6: Grid=100, Density=0.10, Seed=3
+SERIAL =====> [	 dungeon size: 100,, 	 rows: 1000, columns: 1000, 	 x: [-100.000000, 100.000000], y: [-100.000000, 100.000000], 	 Number searches: 20000, , 	 time: 1295 ms, 	number dungeon grid points evaluated: 405076  (41%), Dungeon Master (mana 113668) found at:  x=47.4 y=-84.2, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 20000, Parallelism: 8, Threshold: 313, Leaf tasks: 64, Target tasks: 64, Task efficiency: 100.0%, ==========================, 	 dungeon size: 100,, 	 rows: 1000, columns: 1000, 	 x: [-100.000000, 100.000000], y: [-100.000000, 100.000000], 	 Number searches: 20000, , 	 time: 286 ms, 	number dungeon grid points evaluated: 405078  (41%), Dungeon Master (mana 113668) found at:  x=47.4 y=-84.2, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 7: Grid=100, Density=0.20, Seed=1
+SERIAL =====> [	 dungeon size: 100,, 	 rows: 1000, columns: 1000, 	 x: [-100.000000, 100.000000], y: [-100.000000, 100.000000], 	 Number searches: 40000, , 	 time: 1504 ms, 	number dungeon grid points evaluated: 605738  (61%), Dungeon Master (mana 125847) found at:  x=47.0 y=-18.6, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 40000, Parallelism: 8, Threshold: 625, Leaf tasks: 64, Target tasks: 64, Task efficiency: 100.0%, ==========================, 	 dungeon size: 100,, 	 rows: 1000, columns: 1000, 	 x: [-100.000000, 100.000000], y: [-100.000000, 100.000000], 	 Number searches: 40000, , 	 time: 347 ms, 	number dungeon grid points evaluated: 605741  (61%), Dungeon Master (mana 125847) found at:  x=47.0 y=-18.6, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 8: Grid=100, Density=0.20, Seed=2
+SERIAL =====> [	 dungeon size: 100,, 	 rows: 1000, columns: 1000, 	 x: [-100.000000, 100.000000], y: [-100.000000, 100.000000], 	 Number searches: 40000, , 	 time: 1100 ms, 	number dungeon grid points evaluated: 601525  (60%), Dungeon Master (mana 125325) found at:  x=47.2 y=80.0, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 40000, Parallelism: 8, Threshold: 625, Leaf tasks: 64, Target tasks: 64, Task efficiency: 100.0%, ==========================, 	 dungeon size: 100,, 	 rows: 1000, columns: 1000, 	 x: [-100.000000, 100.000000], y: [-100.000000, 100.000000], 	 Number searches: 40000, , 	 time: 443 ms, 	number dungeon grid points evaluated: 601525  (60%), Dungeon Master (mana 125325) found at:  x=47.2 y=80.0, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 9: Grid=100, Density=0.20, Seed=3
+SERIAL =====> [	 dungeon size: 100,, 	 rows: 1000, columns: 1000, 	 x: [-100.000000, 100.000000], y: [-100.000000, 100.000000], 	 Number searches: 40000, , 	 time: 661 ms, 	number dungeon grid points evaluated: 603476  (60%), Dungeon Master (mana 113668) found at:  x=47.4 y=-84.2, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 40000, Parallelism: 8, Threshold: 625, Leaf tasks: 64, Target tasks: 64, Task efficiency: 100.0%, ==========================, 	 dungeon size: 100,, 	 rows: 1000, columns: 1000, 	 x: [-100.000000, 100.000000], y: [-100.000000, 100.000000], 	 Number searches: 40000, , 	 time: 397 ms, 	number dungeon grid points evaluated: 603476  (60%), Dungeon Master (mana 113668) found at:  x=47.4 y=-84.2, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 10: Grid=200, Density=0.05, Seed=1
+SERIAL =====> [	 dungeon size: 200,, 	 rows: 2000, columns: 2000, 	 x: [-200.000000, 200.000000], y: [-200.000000, 200.000000], 	 Number searches: 40000, , 	 time: 4587 ms, 	number dungeon grid points evaluated: 985520  (25%), Dungeon Master (mana 112937) found at:  x=91.8 y=-33.6, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 40000, Parallelism: 8, Threshold: 625, Leaf tasks: 64, Target tasks: 64, Task efficiency: 100.0%, ==========================, 	 dungeon size: 200,, 	 rows: 2000, columns: 2000, 	 x: [-200.000000, 200.000000], y: [-200.000000, 200.000000], 	 Number searches: 40000, , 	 time: 875 ms, 	number dungeon grid points evaluated: 985522  (25%), Dungeon Master (mana 112937) found at:  x=91.8 y=-33.6, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 11: Grid=200, Density=0.05, Seed=2
+SERIAL =====> [	 dungeon size: 200,, 	 rows: 2000, columns: 2000, 	 x: [-200.000000, 200.000000], y: [-200.000000, 200.000000], 	 Number searches: 40000, , 	 time: 5382 ms, 	number dungeon grid points evaluated: 986456  (25%), Dungeon Master (mana 122420) found at:  x=94.2 y=160.4, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 40000, Parallelism: 8, Threshold: 625, Leaf tasks: 64, Target tasks: 64, Task efficiency: 100.0%, ==========================, 	 dungeon size: 200,, 	 rows: 2000, columns: 2000, 	 x: [-200.000000, 200.000000], y: [-200.000000, 200.000000], 	 Number searches: 40000, , 	 time: 770 ms, 	number dungeon grid points evaluated: 986459  (25%), Dungeon Master (mana 122420) found at:  x=94.2 y=160.4, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 12: Grid=200, Density=0.05, Seed=3
+SERIAL =====> [	 dungeon size: 200,, 	 rows: 2000, columns: 2000, 	 x: [-200.000000, 200.000000], y: [-200.000000, 200.000000], 	 Number searches: 40000, , 	 time: 5444 ms, 	number dungeon grid points evaluated: 985657  (25%), Dungeon Master (mana 101961) found at:  x=91.2 y=-171.6, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 40000, Parallelism: 8, Threshold: 625, Leaf tasks: 64, Target tasks: 64, Task efficiency: 100.0%, ==========================, 	 dungeon size: 200,, 	 rows: 2000, columns: 2000, 	 x: [-200.000000, 200.000000], y: [-200.000000, 200.000000], 	 Number searches: 40000, , 	 time: 1035 ms, 	number dungeon grid points evaluated: 985657  (25%), Dungeon Master (mana 101961) found at:  x=91.2 y=-171.6, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 13: Grid=200, Density=0.10, Seed=1
+SERIAL =====> [	 dungeon size: 200,, 	 rows: 2000, columns: 2000, 	 x: [-200.000000, 200.000000], y: [-200.000000, 200.000000], 	 Number searches: 80000, , 	 time: 9178 ms, 	number dungeon grid points evaluated: 1618033  (40%), Dungeon Master (mana 112937) found at:  x=91.8 y=-33.6, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 80000, Parallelism: 8, Threshold: 1250, Leaf tasks: 64, Target tasks: 64, Task efficiency: 100.0%, ==========================, 	 dungeon size: 200,, 	 rows: 2000, columns: 2000, 	 x: [-200.000000, 200.000000], y: [-200.000000, 200.000000], 	 Number searches: 80000, , 	 time: 1303 ms, 	number dungeon grid points evaluated: 1618035  (40%), Dungeon Master (mana 112937) found at:  x=91.8 y=-33.6, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 14: Grid=200, Density=0.10, Seed=2
+SERIAL =====> [	 dungeon size: 200,, 	 rows: 2000, columns: 2000, 	 x: [-200.000000, 200.000000], y: [-200.000000, 200.000000], 	 Number searches: 80000, , 	 time: 5194 ms, 	number dungeon grid points evaluated: 1615919  (40%), Dungeon Master (mana 122420) found at:  x=94.2 y=160.4, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 80000, Parallelism: 8, Threshold: 1250, Leaf tasks: 64, Target tasks: 64, Task efficiency: 100.0%, ==========================, 	 dungeon size: 200,, 	 rows: 2000, columns: 2000, 	 x: [-200.000000, 200.000000], y: [-200.000000, 200.000000], 	 Number searches: 80000, , 	 time: 1272 ms, 	number dungeon grid points evaluated: 1615921  (40%), Dungeon Master (mana 122420) found at:  x=94.2 y=160.4, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 15: Grid=200, Density=0.10, Seed=3
+SERIAL =====> [	 dungeon size: 200,, 	 rows: 2000, columns: 2000, 	 x: [-200.000000, 200.000000], y: [-200.000000, 200.000000], 	 Number searches: 80000, , 	 time: 6018 ms, 	number dungeon grid points evaluated: 1613772  (40%), Dungeon Master (mana 101961) found at:  x=91.2 y=-171.6, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 80000, Parallelism: 8, Threshold: 1250, Leaf tasks: 64, Target tasks: 64, Task efficiency: 100.0%, ==========================, 	 dungeon size: 200,, 	 rows: 2000, columns: 2000, 	 x: [-200.000000, 200.000000], y: [-200.000000, 200.000000], 	 Number searches: 80000, , 	 time: 890 ms, 	number dungeon grid points evaluated: 1613777  (40%), Dungeon Master (mana 101961) found at:  x=91.2 y=-171.6, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 16: Grid=200, Density=0.20, Seed=1
+SERIAL =====> [	 dungeon size: 200,, 	 rows: 2000, columns: 2000, 	 x: [-200.000000, 200.000000], y: [-200.000000, 200.000000], 	 Number searches: 160000, , 	 time: 9559 ms, 	number dungeon grid points evaluated: 2401639  (60%), Dungeon Master (mana 112937) found at:  x=91.8 y=-33.6, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 160000, Parallelism: 8, Threshold: 2056, Leaf tasks: 78, Target tasks: 64, Task efficiency: 82.1%, ==========================, 	 dungeon size: 200,, 	 rows: 2000, columns: 2000, 	 x: [-200.000000, 200.000000], y: [-200.000000, 200.000000], 	 Number searches: 160000, , 	 time: 1495 ms, 	number dungeon grid points evaluated: 2401643  (60%), Dungeon Master (mana 112937) found at:  x=91.8 y=-33.6, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 17: Grid=200, Density=0.20, Seed=2
+SERIAL =====> [	 dungeon size: 200,, 	 rows: 2000, columns: 2000, 	 x: [-200.000000, 200.000000], y: [-200.000000, 200.000000], 	 Number searches: 160000, , 	 time: 9265 ms, 	number dungeon grid points evaluated: 2400625  (60%), Dungeon Master (mana 122420) found at:  x=94.2 y=160.4, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 160000, Parallelism: 8, Threshold: 2056, Leaf tasks: 78, Target tasks: 64, Task efficiency: 82.1%, ==========================, 	 dungeon size: 200,, 	 rows: 2000, columns: 2000, 	 x: [-200.000000, 200.000000], y: [-200.000000, 200.000000], 	 Number searches: 160000, , 	 time: 1817 ms, 	number dungeon grid points evaluated: 2400630  (60%), Dungeon Master (mana 122420) found at:  x=94.2 y=160.4, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 18: Grid=200, Density=0.20, Seed=3
+SERIAL =====> [	 dungeon size: 200,, 	 rows: 2000, columns: 2000, 	 x: [-200.000000, 200.000000], y: [-200.000000, 200.000000], 	 Number searches: 160000, , 	 time: 7901 ms, 	number dungeon grid points evaluated: 2398901  (60%), Dungeon Master (mana 101961) found at:  x=91.2 y=-171.6, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 160000, Parallelism: 8, Threshold: 2056, Leaf tasks: 78, Target tasks: 64, Task efficiency: 82.1%, ==========================, 	 dungeon size: 200,, 	 rows: 2000, columns: 2000, 	 x: [-200.000000, 200.000000], y: [-200.000000, 200.000000], 	 Number searches: 160000, , 	 time: 2301 ms, 	number dungeon grid points evaluated: 2398909  (60%), Dungeon Master (mana 101961) found at:  x=91.2 y=-171.6, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 19: Grid=300, Density=0.05, Seed=1
+SERIAL =====> [	 dungeon size: 300,, 	 rows: 3000, columns: 3000, 	 x: [-300.000000, 300.000000], y: [-300.000000, 300.000000], 	 Number searches: 90000, , 	 time: 9437 ms, 	number dungeon grid points evaluated: 2259567  (25%), Dungeon Master (mana 97246) found at:  x=144.6 y=-51.4, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 90000, Parallelism: 8, Threshold: 1407, Leaf tasks: 64, Target tasks: 64, Task efficiency: 100.0%, ==========================, 	 dungeon size: 300,, 	 rows: 3000, columns: 3000, 	 x: [-300.000000, 300.000000], y: [-300.000000, 300.000000], 	 Number searches: 90000, , 	 time: 1393 ms, 	number dungeon grid points evaluated: 2259570  (25%), Dungeon Master (mana 97246) found at:  x=144.6 y=-51.4, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 20: Grid=300, Density=0.05, Seed=2
+SERIAL =====> [	 dungeon size: 300,, 	 rows: 3000, columns: 3000, 	 x: [-300.000000, 300.000000], y: [-300.000000, 300.000000], 	 Number searches: 90000, , 	 time: 7609 ms, 	number dungeon grid points evaluated: 2250650  (25%), Dungeon Master (mana 110565) found at:  x=138.0 y=238.8, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 90000, Parallelism: 8, Threshold: 1407, Leaf tasks: 64, Target tasks: 64, Task efficiency: 100.0%, ==========================, 	 dungeon size: 300,, 	 rows: 3000, columns: 3000, 	 x: [-300.000000, 300.000000], y: [-300.000000, 300.000000], 	 Number searches: 90000, , 	 time: 2361 ms, 	number dungeon grid points evaluated: 2250652  (25%), Dungeon Master (mana 110565) found at:  x=138.0 y=238.8, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 21: Grid=300, Density=0.05, Seed=3
+SERIAL =====> [	 dungeon size: 300,, 	 rows: 3000, columns: 3000, 	 x: [-300.000000, 300.000000], y: [-300.000000, 300.000000], 	 Number searches: 90000, , 	 time: 13664 ms, 	number dungeon grid points evaluated: 2252621  (25%), Dungeon Master (mana 103421) found at:  x=140.8 y=-258.6, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 90000, Parallelism: 8, Threshold: 1407, Leaf tasks: 64, Target tasks: 64, Task efficiency: 100.0%, ==========================, 	 dungeon size: 300,, 	 rows: 3000, columns: 3000, 	 x: [-300.000000, 300.000000], y: [-300.000000, 300.000000], 	 Number searches: 90000, , 	 time: 2099 ms, 	number dungeon grid points evaluated: 2252621  (25%), Dungeon Master (mana 103421) found at:  x=140.8 y=-258.6, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 22: Grid=300, Density=0.10, Seed=1
+SERIAL =====> [	 dungeon size: 300,, 	 rows: 3000, columns: 3000, 	 x: [-300.000000, 300.000000], y: [-300.000000, 300.000000], 	 Number searches: 180000, , 	 time: 2554 ms, 	number dungeon grid points evaluated: 3692996  (41%), Dungeon Master (mana 99923) found at:  x=144.2 y=-52.6, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 180000, Parallelism: 8, Threshold: 2056, Leaf tasks: 88, Target tasks: 64, Task efficiency: 72.7%, ==========================, 	 dungeon size: 300,, 	 rows: 3000, columns: 3000, 	 x: [-300.000000, 300.000000], y: [-300.000000, 300.000000], 	 Number searches: 180000, , 	 time: 1091 ms, 	number dungeon grid points evaluated: 3692999  (41%), Dungeon Master (mana 99923) found at:  x=144.2 y=-52.6, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 23: Grid=300, Density=0.10, Seed=2
+SERIAL =====> [	 dungeon size: 300,, 	 rows: 3000, columns: 3000, 	 x: [-300.000000, 300.000000], y: [-300.000000, 300.000000], 	 Number searches: 180000, , 	 time: 10079 ms, 	number dungeon grid points evaluated: 3681258  (41%), Dungeon Master (mana 110565) found at:  x=138.0 y=238.8, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 180000, Parallelism: 8, Threshold: 2056, Leaf tasks: 88, Target tasks: 64, Task efficiency: 72.7%, ==========================, 	 dungeon size: 300,, 	 rows: 3000, columns: 3000, 	 x: [-300.000000, 300.000000], y: [-300.000000, 300.000000], 	 Number searches: 180000, , 	 time: 2345 ms, 	number dungeon grid points evaluated: 3681260  (41%), Dungeon Master (mana 110565) found at:  x=138.0 y=238.8, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 24: Grid=300, Density=0.10, Seed=3
+SERIAL =====> [	 dungeon size: 300,, 	 rows: 3000, columns: 3000, 	 x: [-300.000000, 300.000000], y: [-300.000000, 300.000000], 	 Number searches: 180000, , 	 time: 23249 ms, 	number dungeon grid points evaluated: 3689856  (41%), Dungeon Master (mana 103421) found at:  x=140.8 y=-258.6, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 180000, Parallelism: 8, Threshold: 2056, Leaf tasks: 88, Target tasks: 64, Task efficiency: 72.7%, ==========================, 	 dungeon size: 300,, 	 rows: 3000, columns: 3000, 	 x: [-300.000000, 300.000000], y: [-300.000000, 300.000000], 	 Number searches: 180000, , 	 time: 2864 ms, 	number dungeon grid points evaluated: 3689856  (41%), Dungeon Master (mana 103421) found at:  x=140.8 y=-258.6, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 25: Grid=300, Density=0.20, Seed=1
+SERIAL =====> [	 dungeon size: 300,, 	 rows: 3000, columns: 3000, 	 x: [-300.000000, 300.000000], y: [-300.000000, 300.000000], 	 Number searches: 360000, , 	 time: 19118 ms, 	number dungeon grid points evaluated: 5448819  (61%), Dungeon Master (mana 99923) found at:  x=144.2 y=-52.6, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 360000, Parallelism: 8, Threshold: 2056, Leaf tasks: 176, Target tasks: 64, Task efficiency: 36.4%, ==========================, 	 dungeon size: 300,, 	 rows: 3000, columns: 3000, 	 x: [-300.000000, 300.000000], y: [-300.000000, 300.000000], 	 Number searches: 360000, , 	 time: 4653 ms, 	number dungeon grid points evaluated: 5448821  (61%), Dungeon Master (mana 99923) found at:  x=144.2 y=-52.6, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 26: Grid=300, Density=0.20, Seed=2
+SERIAL =====> [	 dungeon size: 300,, 	 rows: 3000, columns: 3000, 	 x: [-300.000000, 300.000000], y: [-300.000000, 300.000000], 	 Number searches: 360000, , 	 time: 63465 ms, 	number dungeon grid points evaluated: 5447981  (61%), Dungeon Master (mana 110565) found at:  x=138.0 y=238.8, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 360000, Parallelism: 8, Threshold: 2056, Leaf tasks: 176, Target tasks: 64, Task efficiency: 36.4%, ==========================, 	 dungeon size: 300,, 	 rows: 3000, columns: 3000, 	 x: [-300.000000, 300.000000], y: [-300.000000, 300.000000], 	 Number searches: 360000, , 	 time: 5857 ms, 	number dungeon grid points evaluated: 5447984  (61%), Dungeon Master (mana 110565) found at:  x=138.0 y=238.8, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 27: Grid=300, Density=0.20, Seed=3
+SERIAL =====> [	 dungeon size: 300,, 	 rows: 3000, columns: 3000, 	 x: [-300.000000, 300.000000], y: [-300.000000, 300.000000], 	 Number searches: 360000, , 	 time: 25258 ms, 	number dungeon grid points evaluated: 5454402  (61%), Dungeon Master (mana 103421) found at:  x=140.8 y=-258.6, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 360000, Parallelism: 8, Threshold: 2056, Leaf tasks: 176, Target tasks: 64, Task efficiency: 36.4%, ==========================, 	 dungeon size: 300,, 	 rows: 3000, columns: 3000, 	 x: [-300.000000, 300.000000], y: [-300.000000, 300.000000], 	 Number searches: 360000, , 	 time: 3482 ms, 	number dungeon grid points evaluated: 5454405  (61%), Dungeon Master (mana 103421) found at:  x=140.8 y=-258.6, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 28: Grid=500, Density=0.05, Seed=1
+SERIAL =====> [	 dungeon size: 500,, 	 rows: 5000, columns: 5000, 	 x: [-500.000000, 500.000000], y: [-500.000000, 500.000000], 	 Number searches: 250000, , 	 time: 19499 ms, 	number dungeon grid points evaluated: 6211323  (25%), Dungeon Master (mana 96096) found at:  x=232.0 y=-90.0, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 250000, Parallelism: 8, Threshold: 2056, Leaf tasks: 122, Target tasks: 64, Task efficiency: 52.5%, ==========================, 	 dungeon size: 500,, 	 rows: 5000, columns: 5000, 	 x: [-500.000000, 500.000000], y: [-500.000000, 500.000000], 	 Number searches: 250000, , 	 time: 4716 ms, 	number dungeon grid points evaluated: 6211327  (25%), Dungeon Master (mana 96096) found at:  x=232.0 y=-90.0, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 29: Grid=500, Density=0.05, Seed=2
+SERIAL =====> [	 dungeon size: 500,, 	 rows: 5000, columns: 5000, 	 x: [-500.000000, 500.000000], y: [-500.000000, 500.000000], 	 Number searches: 250000, , 	 time: 25283 ms, 	number dungeon grid points evaluated: 6215569  (25%), Dungeon Master (mana 114719) found at:  x=232.4 y=400.8, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 250000, Parallelism: 8, Threshold: 2056, Leaf tasks: 122, Target tasks: 64, Task efficiency: 52.5%, ==========================, 	 dungeon size: 500,, 	 rows: 5000, columns: 5000, 	 x: [-500.000000, 500.000000], y: [-500.000000, 500.000000], 	 Number searches: 250000, , 	 time: 8958 ms, 	number dungeon grid points evaluated: 6215572  (25%), Dungeon Master (mana 114719) found at:  x=232.4 y=400.8, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 30: Grid=500, Density=0.05, Seed=3
+SERIAL =====> [	 dungeon size: 500,, 	 rows: 5000, columns: 5000, 	 x: [-500.000000, 500.000000], y: [-500.000000, 500.000000], 	 Number searches: 250000, , 	 time: 38414 ms, 	number dungeon grid points evaluated: 6207709  (25%), Dungeon Master (mana 115738) found at:  x=232.4 y=-429.2, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 250000, Parallelism: 8, Threshold: 2056, Leaf tasks: 122, Target tasks: 64, Task efficiency: 52.5%, ==========================, 	 dungeon size: 500,, 	 rows: 5000, columns: 5000, 	 x: [-500.000000, 500.000000], y: [-500.000000, 500.000000], 	 Number searches: 250000, , 	 time: 11308 ms, 	number dungeon grid points evaluated: 6207710  (25%), Dungeon Master (mana 115738) found at:  x=232.4 y=-429.2, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 31: Grid=500, Density=0.10, Seed=1
+SERIAL =====> [	 dungeon size: 500,, 	 rows: 5000, columns: 5000, 	 x: [-500.000000, 500.000000], y: [-500.000000, 500.000000], 	 Number searches: 500000, , 	 time: 35859 ms, 	number dungeon grid points evaluated: 10179915  (41%), Dungeon Master (mana 96096) found at:  x=232.0 y=-90.0, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 500000, Parallelism: 8, Threshold: 2056, Leaf tasks: 244, Target tasks: 64, Task efficiency: 26.2%, ==========================, 	 dungeon size: 500,, 	 rows: 5000, columns: 5000, 	 x: [-500.000000, 500.000000], y: [-500.000000, 500.000000], 	 Number searches: 500000, , 	 time: 14281 ms, 	number dungeon grid points evaluated: 10179918  (41%), Dungeon Master (mana 96096) found at:  x=232.0 y=-90.0, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 32: Grid=500, Density=0.10, Seed=2
+SERIAL =====> [	 dungeon size: 500,, 	 rows: 5000, columns: 5000, 	 x: [-500.000000, 500.000000], y: [-500.000000, 500.000000], 	 Number searches: 500000, , 	 time: 71983 ms, 	number dungeon grid points evaluated: 10179215  (41%), Dungeon Master (mana 114719) found at:  x=232.4 y=400.8, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 500000, Parallelism: 8, Threshold: 2056, Leaf tasks: 244, Target tasks: 64, Task efficiency: 26.2%, ==========================, 	 dungeon size: 500,, 	 rows: 5000, columns: 5000, 	 x: [-500.000000, 500.000000], y: [-500.000000, 500.000000], 	 Number searches: 500000, , 	 time: 11588 ms, 	number dungeon grid points evaluated: 10179216  (41%), Dungeon Master (mana 114719) found at:  x=232.4 y=400.8, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 33: Grid=500, Density=0.10, Seed=3
+SERIAL =====> [	 dungeon size: 500,, 	 rows: 5000, columns: 5000, 	 x: [-500.000000, 500.000000], y: [-500.000000, 500.000000], 	 Number searches: 500000, , 	 time: 35349 ms, 	number dungeon grid points evaluated: 10173380  (41%), Dungeon Master (mana 115738) found at:  x=232.4 y=-429.2, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 500000, Parallelism: 8, Threshold: 2056, Leaf tasks: 244, Target tasks: 64, Task efficiency: 26.2%, ==========================, 	 dungeon size: 500,, 	 rows: 5000, columns: 5000, 	 x: [-500.000000, 500.000000], y: [-500.000000, 500.000000], 	 Number searches: 500000, , 	 time: 8030 ms, 	number dungeon grid points evaluated: 10173381  (41%), Dungeon Master (mana 115738) found at:  x=232.4 y=-429.2, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 34: Grid=500, Density=0.20, Seed=1
+SERIAL =====> [	 dungeon size: 500,, 	 rows: 5000, columns: 5000, 	 x: [-500.000000, 500.000000], y: [-500.000000, 500.000000], 	 Number searches: 1000000, , 	 time: 54761 ms, 	number dungeon grid points evaluated: 15092473  (60%), Dungeon Master (mana 96096) found at:  x=232.0 y=-90.0, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 1000000, Parallelism: 8, Threshold: 2056, Leaf tasks: 487, Target tasks: 64, Task efficiency: 13.1%, ==========================, 	 dungeon size: 500,, 	 rows: 5000, columns: 5000, 	 x: [-500.000000, 500.000000], y: [-500.000000, 500.000000], 	 Number searches: 1000000, , 	 time: 12360 ms, 	number dungeon grid points evaluated: 15092479  (60%), Dungeon Master (mana 96096) found at:  x=232.0 y=-90.0, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 35: Grid=500, Density=0.20, Seed=2
+SERIAL =====> [	 dungeon size: 500,, 	 rows: 5000, columns: 5000, 	 x: [-500.000000, 500.000000], y: [-500.000000, 500.000000], 	 Number searches: 1000000, , 	 time: 32631 ms, 	number dungeon grid points evaluated: 15087188  (60%), Dungeon Master (mana 114719) found at:  x=232.4 y=400.8, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 1000000, Parallelism: 8, Threshold: 2056, Leaf tasks: 487, Target tasks: 64, Task efficiency: 13.1%, ==========================, 	 dungeon size: 500,, 	 rows: 5000, columns: 5000, 	 x: [-500.000000, 500.000000], y: [-500.000000, 500.000000], 	 Number searches: 1000000, , 	 time: 7357 ms, 	number dungeon grid points evaluated: 15087191  (60%), Dungeon Master (mana 114719) found at:  x=232.4 y=400.8, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+Test 36: Grid=500, Density=0.20, Seed=3
+SERIAL =====> [	 dungeon size: 500,, 	 rows: 5000, columns: 5000, 	 x: [-500.000000, 500.000000], y: [-500.000000, 500.000000], 	 Number searches: 1000000, , 	 time: 23097 ms, 	number dungeon grid points evaluated: 15079100  (60%), Dungeon Master (mana 115738) found at:  x=232.4 y=-429.2, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+PARALLEL ======>[=== THRESHOLD ANALYSIS ===, Searches: 1000000, Parallelism: 8, Threshold: 2056, Leaf tasks: 487, Target tasks: 64, Task efficiency: 13.1%, ==========================, 	 dungeon size: 500,, 	 rows: 5000, columns: 5000, 	 x: [-500.000000, 500.000000], y: [-500.000000, 500.000000], 	 Number searches: 1000000, , 	 time: 11458 ms, 	number dungeon grid points evaluated: 15079102  (60%), Dungeon Master (mana 115738) found at:  x=232.4 y=-429.2, , map saved to visualiseSearch.png, map saved to visualiseSearchPath.png]
+=======✅✅TEST PASSED✅✅=======
+
+=== VALIDATION RESULTS: 36/36 test passed ===
+🎉 ALL TESTS PASSED
